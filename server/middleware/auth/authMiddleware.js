@@ -22,12 +22,12 @@ const authMiddleware = expressAsyncHandler(async (req, res, next) => {
         // Attach the user to the request object
         req.user = updatedUser;
         next();
-      } else {
-        throw new Error("There is no token attached to the header.");
       }
     } catch (error) {
       throw new Error("Not authorized. Token Expired.");
     }
+  } else {
+    throw new Error("There is no token attached to the header.");
   }
 });
 
