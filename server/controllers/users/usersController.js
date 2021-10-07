@@ -143,6 +143,26 @@ const updateProfileController = expressAsyncHandler(async (req, res) => {
   res.json(user);
 });
 
+//--------------------------------
+// Update user password
+//--------------------------------
+
+const updateUserPasswordController = expressAsyncHandler(async (req, res) => {
+  const { id } = req.user;
+  const { password } = req.body;
+  validateMongodbID(id);
+  // Find user by ID first.
+  const user = await User.findById(id);
+
+  if (password) {
+    user.password = password;
+    const updatedUser = await user.save();
+    res.json(updatedUser);
+  } else {
+    res.json(user);
+  }
+});
+
 module.exports = {
   userRegController,
   loginUserController,
@@ -151,4 +171,5 @@ module.exports = {
   fetchUserDetailsController,
   userProfileController,
   updateProfileController,
+  updateUserPasswordController,
 };

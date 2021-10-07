@@ -115,6 +115,11 @@ const userSchema = new mongoose.Schema(
 // Need to call next due to it being middleware
 
 userSchema.pre("save", async function (next) {
+  // Check to see if password was changed. This essentially prevents a re-hash.
+  // isModified is a mongoose method.
+  if (!this.isModified("password")) {
+    next();
+  }
   // hash password
   // The asynchronous approach is recommended because hashing is CPU intensive
 
