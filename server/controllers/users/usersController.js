@@ -214,6 +214,14 @@ const unfollowUserController = expressAsyncHandler(async (req, res) => {
   const { unfollowId } = req.body;
   const loginUserId = req.user.id;
 
+  const targetUser = await User.findById(loginUserId);
+
+  const notFollowing = targetUser?.following?.find(
+    (user) => user?.toString() === unfollowId.toString()
+  );
+
+  if (!notFollowing) throw new Error("You are not following this user!");
+
   await User.findByIdAndUpdate(
     unfollowId,
     {
@@ -235,6 +243,42 @@ const unfollowUserController = expressAsyncHandler(async (req, res) => {
   res.json("You have unfollowed this user!");
 });
 
+//--------------------------------
+// Block user (as admin)
+//--------------------------------
+
+const blockUserController = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongodbID(id);
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      isBlocked: true,
+    },
+    { new: true }
+  );
+  res.json(user);
+});
+
+//--------------------------------
+// Unblock user (as admin)
+//--------------------------------
+
+const unblockUserController = expressAsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongodbID(id);
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      isBlocked: false,
+    },
+    { new: true }
+  );
+  res.json(user);
+});
+
 module.exports = {
   userRegController,
   loginUserController,
@@ -246,4 +290,6 @@ module.exports = {
   updateUserPasswordController,
   followUserController,
   unfollowUserController,
+  blockUserController,
+  unblockUserController,
 };
