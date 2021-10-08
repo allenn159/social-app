@@ -3,7 +3,7 @@ const expressAsyncHandler = require("express-async-handler");
 const generateToken = require("../../config/token/generateToken");
 const validateMongodbID = require("../../utils/validateMongodbID");
 
-//expressAsyncHandler saves yo fromu writing your own try/catch for async/await and passes error on to next.
+//expressAsyncHandler saves you from writing your own try/catch for async/await and passes error on to next.
 
 //--------------------------------
 // Register
