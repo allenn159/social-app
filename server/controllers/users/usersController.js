@@ -163,6 +163,78 @@ const updateUserPasswordController = expressAsyncHandler(async (req, res) => {
   }
 });
 
+//--------------------------------
+// Follow user
+//--------------------------------
+
+const followUserController = expressAsyncHandler(async (req, res) => {
+  // Find the user you want to follow and update it's followers field.
+  // Update the login users following field.
+  const { followId } = req.body;
+  const loginUserId = req.user.id;
+
+  //Find the target user and check if the login user id exists in the following array.
+
+  const targetUser = await User.findById(followId);
+
+  const alreadyFollowing = targetUser?.followers?.find(
+    (user) => user?.toString() === loginUserId.toString()
+  );
+
+  if (alreadyFollowing) throw new Error("You are already following this user!");
+
+  // Update the target user's followers array.
+  await User.findByIdAndUpdate(
+    followId,
+    {
+      $push: { followers: loginUserId },
+      isFollowing: true,
+    },
+    { new: true }
+  );
+
+  // Update login user's following array.
+  await User.findByIdAndUpdate(
+    loginUserId,
+    {
+      $push: { following: followId },
+    },
+    { new: true }
+  );
+
+  res.json("You have successfully followed this user ");
+});
+
+//--------------------------------
+// Unfollow user
+//--------------------------------
+
+const unfollowUserController = expressAsyncHandler(async (req, res) => {
+  // Find the user you want to unfollow and update it's followers field.
+  const { unfollowId } = req.body;
+  const loginUserId = req.user.id;
+
+  await User.findByIdAndUpdate(
+    unfollowId,
+    {
+      // Pull removes from the followers array
+      $pull: { followers: loginUserId },
+      isFollowing: false,
+    },
+    { new: true }
+  );
+
+  await User.findByIdAndUpdate(
+    loginUserId,
+    {
+      $pull: { following: unfollowId },
+    },
+    { new: true }
+  );
+
+  res.json("You have unfollowed this user!");
+});
+
 module.exports = {
   userRegController,
   loginUserController,
@@ -172,4 +244,6 @@ module.exports = {
   userProfileController,
   updateProfileController,
   updateUserPasswordController,
+  followUserController,
+  unfollowUserController,
 };

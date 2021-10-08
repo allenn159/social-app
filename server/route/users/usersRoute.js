@@ -8,6 +8,8 @@ const {
   userProfileController,
   updateProfileController,
   updateUserPasswordController,
+  followUserController,
+  unfollowUserController,
 } = require("../../controllers/users/usersController");
 const authMiddleware = require("../../middleware/auth/authMiddleware");
 
@@ -21,5 +23,7 @@ userRoutes.get("/profile/:id", authMiddleware, userProfileController);
 userRoutes.put("/:id", authMiddleware, updateProfileController);
 userRoutes.delete("/:id", deleteUserController);
 userRoutes.get("/:id", fetchUserDetailsController);
+userRoutes.post("/follow", authMiddleware, followUserController);
+userRoutes.post("/unfollow", authMiddleware, unfollowUserController);
 
 module.exports = userRoutes;
