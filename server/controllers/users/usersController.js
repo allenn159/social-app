@@ -352,35 +352,63 @@ const accountVerificationController = expressAsyncHandler(async (req, res) => {
 // Generate forget password token
 //--------------------------------
 
-const forgetPasswordToken = expressAsyncHandler(async (req, res) => {
-  // Locate user by email.
-  const { email } = req.body;
+const generateForgetPasswordTokenController = expressAsyncHandler(
+  async (req, res) => {
+    // Locate user by email.
+    const { email } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user) throw new Error("User not found");
+    const user = await User.findOne({ email });
+    if (!user) throw new Error("User not found");
 
-  try {
-    const token = await user.createPasswordResetToken();
-    console.log(token);
-    await user.save();
+    try {
+      const token = await user.createPasswordResetToken();
+      console.log(token);
+      await user.save();
 
-    // Build message
+      // Build message
 
-    const resetLink = `Please reset your password within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`;
+      const resetLink = `Please reset your password within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`;
 
-    const msg = {
-      to: email,
-      from: "donotreplycrudapp@gmail.com",
-      subject: "Reset Password",
-      html: resetLink,
-    };
+      const msg = {
+        to: email,
+        from: "donotreplycrudapp@gmail.com",
+        subject: "Reset Password",
+        html: resetLink,
+      };
 
-    const emailMsg = await sendGridMail.send(msg);
-    // In production never send response with email message.
-    res.json(emailMsg);
-  } catch (error) {
-    res.json(error);
+      const emailMsg = await sendGridMail.send(msg);
+      // In production never send response with email message.
+      res.json({
+        msg: `A message was succesfully sent to ${user.email}. Please reset the password within the next 10 minutes. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`,
+      });
+    } catch (error) {
+      res.json(error);
+    }
   }
+);
+
+//--------------------------------
+// Password reset controller
+//--------------------------------
+
+const passwordResetController = expressAsyncHandler(async (req, res) => {
+  const { token, password } = req.body;
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  //Find user by the token
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: new Date() },
+  });
+
+  if (!user) throw new Error("Token expired");
+
+  // Change password
+  user.password = password;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+  res.json(user);
 });
 
 module.exports = {
@@ -398,5 +426,6 @@ module.exports = {
   unblockUserController,
   generateVerificationTokenController,
   accountVerificationController,
-  forgetPasswordToken,
+  generateForgetPasswordTokenController,
+  passwordResetController,
 };

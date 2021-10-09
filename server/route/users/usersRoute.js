@@ -14,7 +14,8 @@ const {
   unblockUserController,
   generateVerificationTokenController,
   accountVerificationController,
-  forgetPasswordToken,
+  generateForgetPasswordTokenController,
+  passwordResetController,
 } = require("../../controllers/users/usersController");
 const authMiddleware = require("../../middleware/auth/authMiddleware");
 
@@ -24,7 +25,11 @@ userRoutes.post("/register", userRegController);
 userRoutes.post("/login", loginUserController);
 userRoutes.get("/", authMiddleware, fetchUsersController);
 userRoutes.put("/password", authMiddleware, updateUserPasswordController);
-userRoutes.post("/forget-password-token", forgetPasswordToken);
+userRoutes.post(
+  "/forget-password-token",
+  generateForgetPasswordTokenController
+);
+userRoutes.put("/reset-password", passwordResetController);
 userRoutes.get("/profile/:id", authMiddleware, userProfileController);
 userRoutes.put("/follow", authMiddleware, followUserController);
 userRoutes.put("/unfollow", authMiddleware, unfollowUserController);
