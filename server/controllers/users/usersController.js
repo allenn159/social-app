@@ -302,13 +302,13 @@ const generateVerificationTokenController = expressAsyncHandler(
       // Save user
       await user.save();
       console.log(verificationToken);
-      // Build your message
+      // Build message
 
       const verifyLink = `Please verify your email within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/verify-account/${verificationToken}">Click here to verify your account.</a>`;
 
       const msg = {
         to: "allenabbottdev@gmail.com",
-        from: "allenn159@gmail.com",
+        from: "donotreplycrudapp@gmail.com",
         subject: "My first NodeJS email",
         html: verifyLink,
       };
@@ -348,6 +348,41 @@ const accountVerificationController = expressAsyncHandler(async (req, res) => {
   res.json(userFound);
 });
 
+//--------------------------------
+// Generate forget password token
+//--------------------------------
+
+const forgetPasswordToken = expressAsyncHandler(async (req, res) => {
+  // Locate user by email.
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) throw new Error("User not found");
+
+  try {
+    const token = await user.createPasswordResetToken();
+    console.log(token);
+    await user.save();
+
+    // Build message
+
+    const resetLink = `Please reset your password within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`;
+
+    const msg = {
+      to: email,
+      from: "donotreplycrudapp@gmail.com",
+      subject: "Reset Password",
+      html: resetLink,
+    };
+
+    const emailMsg = await sendGridMail.send(msg);
+    // In production never send response with email message.
+    res.json(emailMsg);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 module.exports = {
   userRegController,
   loginUserController,
@@ -363,4 +398,5 @@ module.exports = {
   unblockUserController,
   generateVerificationTokenController,
   accountVerificationController,
+  forgetPasswordToken,
 };
