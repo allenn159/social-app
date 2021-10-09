@@ -2,8 +2,15 @@ const User = require("../../model/user/User");
 const expressAsyncHandler = require("express-async-handler");
 const generateToken = require("../../config/token/generateToken");
 const validateMongodbID = require("../../utils/validateMongodbID");
+const dotenv = require("dotenv");
+const sendGridMail = require("@sendgrid/mail");
+const crypto = require("crypto");
+
+dotenv.config();
 
 //expressAsyncHandler saves you from writing your own try/catch for async/await and passes error on to next.
+
+sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //--------------------------------
 // Register
@@ -279,6 +286,68 @@ const unblockUserController = expressAsyncHandler(async (req, res) => {
   res.json(user);
 });
 
+//--------------------------------
+// Generate account verification token (by email)
+//--------------------------------
+
+const generateVerificationTokenController = expressAsyncHandler(
+  async (req, res) => {
+    const loginUser = req.user.id;
+
+    const user = await User.findById(loginUser);
+
+    try {
+      // Generate Token
+      const verificationToken = await user.createVerfificationToken();
+      // Save user
+      await user.save();
+      console.log(verificationToken);
+      // Build your message
+
+      const verifyLink = `Please verify your email within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/verify-account/${verificationToken}">Click here to verify your account.</a>`;
+
+      const msg = {
+        to: "allenabbottdev@gmail.com",
+        from: "allenn159@gmail.com",
+        subject: "My first NodeJS email",
+        html: verifyLink,
+      };
+
+      await sendGridMail.send(msg);
+      res.json(verifyLink);
+    } catch (error) {
+      res.json(error);
+    }
+  }
+);
+
+//--------------------------------
+// Account verification
+//--------------------------------
+
+const accountVerificationController = expressAsyncHandler(async (req, res) => {
+  const { token } = req.body;
+  // Rehashing token again to find match in database.
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  // Find the user by token
+  const userFound = await User.findOne({
+    accountVerificationToken: hashedToken,
+    // the gt will check to see if the current date is passed the token expiration date.
+    accountVerificationTokenExpires: { $gt: new Date() },
+  });
+
+  if (!userFound) throw new Error("Token expired, try again later.");
+
+  // Update the account verified property to true.
+  userFound.isAccountVerified = true;
+  userFound.accountVerificationToken = undefined;
+  userFound.accountVerificationTokenExpires = undefined;
+
+  await userFound.save();
+  res.json(userFound);
+});
+
 module.exports = {
   userRegController,
   loginUserController,
@@ -292,4 +361,6 @@ module.exports = {
   unfollowUserController,
   blockUserController,
   unblockUserController,
+  generateVerificationTokenController,
+  accountVerificationController,
 };
