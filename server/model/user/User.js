@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 //create schema
 
@@ -133,6 +134,22 @@ userSchema.pre("save", async function (next) {
 // This method takes in the password as an argument and compares it with the schemaModel and login credentials from the user.
 userSchema.methods.isPasswordMatching = async function (pw) {
   return await bcrypt.compare(pw, this.password);
+};
+
+// Verify account
+userSchema.methods.createVerfificationToken = async function () {
+  // create a token
+  // these are node methods.
+  const verificationToken = crypto.randomBytes(32).toString("hex");
+  this.accountVerificationToken = crypto
+    .createHash("sha256")
+    .update(verificationToken)
+    .digest("hex");
+
+  // token expires in ten minutes
+  this.accountVerificationTokenExpires = Date.now() + 30 * 60 * 1000;
+
+  return verificationToken;
 };
 
 // Compile schema into model
