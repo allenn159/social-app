@@ -5,6 +5,7 @@ const validateMongodbID = require("../../utils/validateMongodbID");
 const dotenv = require("dotenv");
 const sendGridMail = require("@sendgrid/mail");
 const crypto = require("crypto");
+const cloudinaryUploadImg = require("../../utils/cloudinary");
 
 dotenv.config();
 
@@ -411,6 +412,30 @@ const passwordResetController = expressAsyncHandler(async (req, res) => {
   res.json(user);
 });
 
+//--------------------------------
+// Profile picture upload
+//--------------------------------
+
+const profilePictureUploadController = expressAsyncHandler(async (req, res) => {
+  //Find the login user before uploading image.
+  const { _id } = req.user;
+
+  // Get the path to the image.
+  const localPath = `public/images/profile/${req.file.fileName}`;
+  // Upload to cloudinary
+  const uploadedImg = await cloudinaryUploadImg(localPath);
+
+  const user = await User.findByIdAndUpdate(
+    _id,
+    {
+      profilePicture: uploadedImg?.url,
+    },
+    { new: true }
+  );
+
+  res.json(user);
+});
+
 module.exports = {
   userRegController,
   loginUserController,
@@ -428,4 +453,5 @@ module.exports = {
   accountVerificationController,
   generateForgetPasswordTokenController,
   passwordResetController,
+  profilePictureUploadController,
 };

@@ -16,14 +16,27 @@ const {
   accountVerificationController,
   generateForgetPasswordTokenController,
   passwordResetController,
+  profilePictureUploadController,
 } = require("../../controllers/users/usersController");
 const authMiddleware = require("../../middleware/auth/authMiddleware");
+const {
+  profilePictureUpload,
+  profilePictureResize,
+} = require("../../middleware/uploads/profilePictureUpload");
 
 const userRoutes = express.Router();
 
 userRoutes.post("/register", userRegController);
 userRoutes.post("/login", loginUserController);
 userRoutes.get("/", authMiddleware, fetchUsersController);
+userRoutes.put(
+  "/profile-picture-upload",
+  authMiddleware,
+  // This is how multer looks for the image that is being uploaded.
+  profilePictureUpload.single("image"),
+  profilePictureResize,
+  profilePictureUploadController
+);
 userRoutes.put("/password", authMiddleware, updateUserPasswordController);
 userRoutes.post(
   "/forget-password-token",
