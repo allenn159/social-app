@@ -20,7 +20,7 @@ const userRegController = expressAsyncHandler(async (req, res) => {
   // Check if user exists with the email address
   const userExists = await User.findOne({ email: req?.body?.email });
   // Throw an error for user to see.
-  if (userExists) throw new Error("User already exists with current email");
+  if (userExists) throw new Error("User already exists with entered email");
 
   try {
     // Register User

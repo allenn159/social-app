@@ -5,7 +5,8 @@ const notFound = (req, res, next) => {
   next(error);
 };
 
-// Error handler
+// Error handler in epxress takes four arguments.
+// This middleware allows for us to send our errors in json format.
 const errorHandler = (err, req, res, next) => {
   // Creating this variable because sometimes the error will return as 200 even though there is actually an error
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;

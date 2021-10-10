@@ -129,9 +129,10 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-//Match password
+//Compare passwords
 // Append our own method
 // This method takes in the password as an argument and compares it with the schemaModel and login credentials from the user.
+// this.password points to the hashed password in our database.
 userSchema.methods.isPasswordMatching = async function (pw) {
   return await bcrypt.compare(pw, this.password);
 };

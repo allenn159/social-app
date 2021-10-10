@@ -10,6 +10,7 @@
   "author": "Allen Abbott",
   "license": "ISC",
   "dependencies": {
+    "bad-words": "^3.0.4",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.0",
     "dotenv": "^10.0.0",

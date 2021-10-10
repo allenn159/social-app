@@ -20,9 +20,9 @@ const {
 } = require("../../controllers/users/usersController");
 const authMiddleware = require("../../middleware/auth/authMiddleware");
 const {
-  profilePictureUpload,
+  pictureUpload,
   profilePictureResize,
-} = require("../../middleware/uploads/profilePictureUpload");
+} = require("../../middleware/uploads/pictureUpload");
 
 const userRoutes = express.Router();
 
@@ -33,7 +33,7 @@ userRoutes.put(
   "/profile-picture-upload",
   authMiddleware,
   // This is how multer looks for the image that is being uploaded.
-  profilePictureUpload.single("image"),
+  pictureUpload.single("image"),
   profilePictureResize,
   profilePictureUploadController
 );
