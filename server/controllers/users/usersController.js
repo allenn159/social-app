@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const sendGridMail = require("@sendgrid/mail");
 const crypto = require("crypto");
 const cloudinaryUploadImg = require("../../utils/cloudinary");
+const fs = require("fs");
 
 dotenv.config();
 
@@ -111,7 +112,8 @@ const fetchUserDetailsController = expressAsyncHandler(async (req, res) => {
 });
 
 //--------------------------------
-// User profile - This is for the user who is logged in. This controller will be validated.
+// View user profile - This is for the user who is logged in. This controller will be validated.
+// You can only view posts of other users when you're logged in.
 //--------------------------------
 
 const userProfileController = expressAsyncHandler(async (req, res) => {
@@ -119,7 +121,7 @@ const userProfileController = expressAsyncHandler(async (req, res) => {
 
   validateMongodbID(id);
   try {
-    const myProfile = await User.findById(id);
+    const myProfile = await User.findById(id).populate("posts");
     res.json(myProfile);
   } catch (error) {
     res.json(error);
@@ -210,7 +212,7 @@ const followUserController = expressAsyncHandler(async (req, res) => {
     { new: true }
   );
 
-  res.json("You have successfully followed this user ");
+  res.json("You have successfully followed this user!");
 });
 
 //--------------------------------
@@ -378,7 +380,7 @@ const generateForgetPasswordTokenController = expressAsyncHandler(
       };
 
       const emailMsg = await sendGridMail.send(msg);
-      // In production never send response with email message.
+      // In production never send json response with email message.
       res.json({
         msg: `A message was succesfully sent to ${user.email}. Please reset the password within the next 10 minutes. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`,
       });
@@ -432,7 +434,8 @@ const profilePictureUploadController = expressAsyncHandler(async (req, res) => {
     },
     { new: true }
   );
-
+  // Remove uploaded image in local file.
+  fs.unlinkSync(localPath);
   res.json(user);
 });
 

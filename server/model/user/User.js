@@ -110,6 +110,15 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+// Virtual method to populate user posts.
+userSchema.virtual("posts", {
+  // Referencing to the Post model.
+  ref: "Post",
+  // User is being referenced from the Post model as well.
+  foreignField: "user",
+  localField: "_id",
+});
+
 // Hash password
 // Mongoose function
 // Don't use arrow function due to the behavior of the "this" keyword.

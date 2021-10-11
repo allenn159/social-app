@@ -3,6 +3,7 @@ const sharp = require("sharp");
 const path = require("path");
 
 // Multer and path are from node
+// Multer is middleware to handle form-data primarily for uploading files.
 
 // Storage
 const multerStorage = multer.memoryStorage();
