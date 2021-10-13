@@ -20,7 +20,7 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
   if (isProfane) throw new Error("Post cannot contain profanity.");
 
   // Get the path to the image.
-  const localPath = `public/images/posts/${req.file.fileName}`;
+  const localPath = `public/images/posts/${req?.file?.fileName}`;
   // Upload to cloudinary
   const uploadedImg = await cloudinaryUploadImg(localPath);
 
@@ -115,10 +115,134 @@ const deletePostCtrl = expressAsyncHandler(async (req, res) => {
   }
 });
 
+//--------------------------------
+// Like post
+//--------------------------------
+
+const toggleLikePostCtrl = expressAsyncHandler(async (req, res) => {
+  // Find the post that is being liked.
+  const { postId } = req.body;
+  const post = await Post.findById(postId);
+  // Find the login user
+  const loginUserId = req?.user?._id;
+  // Check if this user has liked a particular post.
+  const isLiked = post?.isLiked;
+  // Check if this user has disliked this particular post.
+  const isDisliked = post?.disLikes?.find(
+    (userId) => userId.toString() === loginUserId.toString()
+  );
+
+  const likesCounter = post?.likesCounter;
+  const dislikesCounter = post?.dislikesCounter;
+
+  // Remove the user from the dislikes array if they exist.
+  if (isDisliked) {
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $pull: { disLikes: loginUserId },
+        dislikesCounter: dislikesCounter === 0 ? 0 : dislikesCounter - 1,
+        isDisliked: false,
+      },
+      { new: true }
+    );
+    res.json(post);
+  }
+  // Toggle
+  // Remove the user if they have liked the post.
+  if (isLiked) {
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $pull: { likes: loginUserId },
+        likesCounter: likesCounter - 1,
+        isLiked: false,
+      },
+      { new: true }
+    );
+    res.json(post);
+  } else {
+    // Add to likes
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $push: { likes: loginUserId },
+        likesCounter: likesCounter + 1,
+        isLiked: true,
+      },
+      { new: true }
+    );
+    res.json(post);
+  }
+});
+
+//--------------------------------
+// Dislike post
+//--------------------------------
+
+const toggleDislikePostctrl = expressAsyncHandler(async (req, res) => {
+  // Find the post that is being liked.
+  const { postId } = req.body;
+  const post = await Post.findById(postId);
+  // Find the login user
+  const loginUserId = req?.user?._id;
+  // Check if this user has liked a particular post.
+  const isDisliked = post?.isDisliked;
+  // Check if this user has disliked this particular post.
+  const isLiked = post?.likes?.find(
+    (userId) => userId?.toString() === loginUserId.toString()
+  );
+
+  const likesCounter = post?.likesCounter;
+  const dislikesCounter = post?.dislikesCounter;
+
+  // Toggle
+  // Remove the user if they have liked the post.
+  if (isLiked) {
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $pull: { likes: loginUserId },
+        likesCounter: likesCounter === 0 ? 0 : likesCounter - 1,
+        isLiked: false,
+      },
+      { new: true }
+    );
+    res.json(post);
+  }
+  // Toggle
+  // Remove the user if they have disliked the post.
+  if (isDisliked) {
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $pull: { disLikes: loginUserId },
+        dislikesCounter: dislikesCounter - 1,
+        isDisliked: false,
+      },
+      { new: true }
+    );
+    res.json(post);
+  } else {
+    const post = await Post.findByIdAndUpdate(
+      postId,
+      {
+        $push: { disLikes: loginUserId },
+        dislikesCounter: dislikesCounter + 1,
+        isDisliked: true,
+      },
+      { new: true }
+    );
+    res.json(post);
+  }
+});
+
 module.exports = {
   createPostCtrl,
   fetchPostsCtrl,
   fetchPostCtrl,
   updatePostCtrl,
   deletePostCtrl,
+  toggleLikePostCtrl,
+  toggleDislikePostctrl,
 };

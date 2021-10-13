@@ -17,9 +17,17 @@ const postSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isDisLiked: {
+    isDisliked: {
       type: Boolean,
       default: false,
+    },
+    likesCounter: {
+      type: Number,
+      default: 0,
+    },
+    dislikesCounter: {
+      type: Number,
+      default: 0,
     },
     numViews: {
       type: Number,
