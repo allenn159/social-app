@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const usersRoute = require("./route/users/usersRoute");
 const postsRoute = require("./route/posts/postsRoute");
 const commentsRoute = require("./route/comments/commentsRoute");
+const categoryRoute = require("./route/category/categoryRoute");
 const { errorHandler, notFound } = require("./middleware/error/errorHandler");
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/users", usersRoute);
 app.use("/api/posts", postsRoute);
 app.use("/api/comments", commentsRoute);
+app.use("/api/categories", categoryRoute);
 
 //Error handlers
 app.use(notFound);
