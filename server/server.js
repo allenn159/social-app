@@ -1,6 +1,7 @@
 const express = require("express");
 const dbConnect = require("./config/db/index");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const usersRoute = require("./route/users/usersRoute");
 const postsRoute = require("./route/posts/postsRoute");
 const commentsRoute = require("./route/comments/commentsRoute");
@@ -17,6 +18,7 @@ dbConnect();
 //Middleware
 // This parses incoming requests with JSON payloads.
 app.use(express.json());
+app.use(cors());
 
 //Users Route
 app.use("/api/users", usersRoute);
