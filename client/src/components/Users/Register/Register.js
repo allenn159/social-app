@@ -25,7 +25,7 @@ const Register = () => {
 
   // Retrieve state from store
   const storeData = useSelector((store) => store?.users);
-  const { appErr, serverErr, registered } = storeData;
+  const { appErr, registered } = storeData;
 
   //redirect to profile page after user has created account.
   if (registered) {
@@ -40,10 +40,8 @@ const Register = () => {
       <Paper elevation={3}>
         <div className={classes.contentCont}>
           <h1 className={classes.titleTwo}>Register Account</h1>
-          {error && (appErr || serverErr) ? (
-            <p className={classes.errorMessage}>
-              {serverErr.split(" ").slice(1).join(" ")} {appErr}
-            </p>
+          {error && appErr ? (
+            <p className={classes.errorMessage}>{appErr}</p>
           ) : null}
           <form className={classes.formCont} onSubmit={onFormSubmit}>
             <TextField

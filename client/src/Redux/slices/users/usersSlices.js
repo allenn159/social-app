@@ -43,6 +43,7 @@ const usersSlices = createSlice({
     // Register
     builder.addCase(registerUserAction.pending, (state, action) => {
       state.loading = true;
+      state.appErr = undefined;
     });
     builder.addCase(registerUserAction.fulfilled, (state, action) => {
       state.loading = false;
@@ -54,7 +55,6 @@ const usersSlices = createSlice({
       state.loading = false;
       // Error with the application
       state.appErr = action?.payload?.message;
-      state.serverErr = action?.error?.message;
     });
   },
 });
