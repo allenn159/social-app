@@ -2,7 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   gridContainer: {
-    marginTop: "25vh",
+    marginTop: "20vh",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "5vh",
+    },
   },
   gridItemOne: {
     display: "flex",
@@ -16,20 +19,32 @@ export default makeStyles((theme) => ({
   },
   text1: {
     fontSize: "80px",
-    fontFamily: "Mukta",
+    fontFamily: "Helvetica",
     fontWeight: 700,
     margin: 0,
     textAlign: "center",
     marginRight: "100px",
+    [theme.breakpoints.down("md")]: {
+      margin: 0,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "65px",
+    },
   },
   text2: {
     fontSize: "100px",
-    fontFamily: "Mukta",
+    fontFamily: "Helvetica",
     fontWeight: 700,
     margin: 0,
     color: "#113CFC",
     textAlign: "center",
     marginLeft: "150px",
+    [theme.breakpoints.down("md")]: {
+      margin: 0,
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "80px",
+    },
   },
   buttonContainer: {
     width: "100%",
@@ -52,5 +67,12 @@ export default makeStyles((theme) => ({
     fontFamily: "Mukta",
     fontSize: "20px",
     color: "white",
+  },
+  image: {
+    maxWidth: "75%",
+    borderRadius: "10px",
+    [theme.breakpoints.down("sm")]: {
+      margin: "50px 0",
+    },
   },
 }));

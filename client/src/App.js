@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import Register from "./components/Users/Register/Register";
 
+import "./App.css";
+
 function App() {
   return (
     <Router>
