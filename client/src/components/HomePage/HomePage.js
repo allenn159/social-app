@@ -33,7 +33,7 @@ const HomePage = () => {
           </div>
         </Grid>
         <Grid className={classes.gridItemTwo} item xs={12} md={6}>
-          <img className={classes.image} src={img} />
+          <img className={classes.image} src={img} alt="blog" />
         </Grid>
       </Grid>
     </div>
