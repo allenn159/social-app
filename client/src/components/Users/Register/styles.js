@@ -8,7 +8,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     marginTop: "15vh",
     [theme.breakpoints.down("sm")]: {
-      marginTop: "5vh",
+      marginTop: "12vh",
     },
   },
   contentCont: {
