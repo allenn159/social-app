@@ -26,7 +26,12 @@ const HomePage = () => {
               >
                 Sign Up
               </Button>
-              <Button variant="contained" className={classes.loginBtn}>
+              <Button
+                component={Link}
+                to="/login"
+                variant="contained"
+                className={classes.loginBtn}
+              >
                 Login
               </Button>
             </div>

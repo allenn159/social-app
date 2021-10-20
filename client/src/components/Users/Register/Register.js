@@ -37,7 +37,7 @@ const Register = () => {
       <Link className={classes.link} to="/">
         <h1 className={classes.titleOne}>uBlog</h1>
       </Link>
-      <Paper elevation={3}>
+      <Paper className={classes.paper} elevation={3}>
         <div className={classes.contentCont}>
           <h1 className={classes.titleTwo}>Register Account</h1>
           {error && appErr ? (

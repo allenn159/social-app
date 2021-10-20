@@ -46,12 +46,12 @@ export default makeStyles((theme) => ({
     width: "110%",
   },
   button: {
-    margin: "10px 0 30px 0",
+    margin: "10px 0 30px 0 ",
     background: "linear-gradient(45deg, #FFA400 30%, #ff8e53 90%)",
     boxShadow: "0 1px 3px 1px rgba(255, 105, 135, 0.3)",
     fontFamily: "Mukta",
-    fontSize: "18px",
     width: "80%",
+    fontSize: "18px",
     borderRadius: "20px",
   },
   errorMessage: {
