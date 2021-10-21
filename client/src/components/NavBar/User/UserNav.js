@@ -1,9 +1,13 @@
 import React from "react";
 import { AppBar, Toolbar, Button } from "@material-ui/core";
 import useStyles from "./styles";
+import AddIcon from "@mui/icons-material/Add";
+import { useDispatch } from "react-redux";
+import { logoutUserAction } from "../../../Redux/slices/users/usersSlices";
 
 const UserNav = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
@@ -16,8 +20,18 @@ const UserNav = () => {
             <Button className={classes.button}>Explore</Button>
             <Button variant="contained" className={classes.createPostBtn}>
               New Post
+              <AddIcon className={classes.plusIcon} />
             </Button>
           </div>
+        </div>
+        <div className={classes.contentCont}>
+          <Button
+            onClick={() => dispatch(logoutUserAction())}
+            className={classes.button}
+          >
+            Logout
+          </Button>
+          <p>Pic</p>
         </div>
       </Toolbar>
     </AppBar>

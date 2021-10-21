@@ -8,6 +8,7 @@ export default makeStyles((theme) => ({
   },
   toolBar: {
     display: "flex",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   contentCont: {
@@ -37,5 +38,11 @@ export default makeStyles((theme) => ({
     fontFamily: "Mukta",
     fontSize: "18px",
     height: "40px",
+  },
+  plusIcon: {
+    margin: "0 0 3px 3px",
+  },
+  logoutBtn: {
+    marginRight: "20px",
   },
 }));
