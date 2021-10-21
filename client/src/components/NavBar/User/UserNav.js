@@ -4,6 +4,7 @@ import useStyles from "./styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch } from "react-redux";
 import { logoutUserAction } from "../../../Redux/slices/users/usersSlices";
+import { Link } from "react-router-dom";
 
 const UserNav = () => {
   const classes = useStyles();
@@ -18,6 +19,13 @@ const UserNav = () => {
             <Button className={classes.button}>Create</Button>
             <Button className={classes.button}>Posts</Button>
             <Button className={classes.button}>Explore</Button>
+            <Button
+              component={Link}
+              to="/add-category"
+              className={classes.button}
+            >
+              Create Category
+            </Button>
             <Button variant="contained" className={classes.createPostBtn}>
               New Post
               <AddIcon className={classes.plusIcon} />
