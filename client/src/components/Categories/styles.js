@@ -7,7 +7,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
   },
   contentCont: {
-    marginTop: "20vh",
+    marginTop: "15vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -41,7 +41,21 @@ export default makeStyles((theme) => ({
     position: "absolute",
     left: 10,
   },
+  successMsgCont: {
+    width: "300px",
+    height: "55px",
+  },
   successMsg: {
     marginTop: "25px",
+  },
+  categoriesCont: {
+    marginTop: "50px",
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  categoriesItem: {
+    margin: "20px",
+    fontFamily: "Mukta",
+    fontSize: "25px",
   },
 }));

@@ -24,7 +24,7 @@ const UserNav = () => {
               to="/add-category"
               className={classes.button}
             >
-              Create Category
+              Categories
             </Button>
             <Button variant="contained" className={classes.createPostBtn}>
               New Post

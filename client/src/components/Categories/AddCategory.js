@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Grid, TextField, Button } from "@material-ui/core";
 import Alert from "@mui/material/Alert";
 import useStyles from "./styles";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
-import { createCategoryAction } from "../../Redux/slices/categories/categoriesSlice";
+import {
+  createCategoryAction,
+  fetchCategoriesAction,
+} from "../../Redux/slices/categories/categoriesSlice";
 
 const AddCategory = () => {
   const [category, setCategory] = useState({
@@ -13,24 +16,40 @@ const AddCategory = () => {
   const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
   const classes = useStyles();
+  const colors = [
+    "#A2D2FF",
+    "#CDF2CA",
+    "#FC92E3",
+    "#CAB8FF",
+    "#00EAD3",
+    "#7DEDFF",
+    "#B8DFD8",
+    "#FFEDA3",
+  ];
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
     setSuccess(true);
     dispatch(createCategoryAction(category));
+    dispatch(fetchCategoriesAction());
     setCategory({ ...category, title: "" });
   };
 
-  const state = useSelector((state) => state?.categories);
+  useEffect(() => {
+    dispatch(fetchCategoriesAction());
+  }, [dispatch]);
 
-  const { submitSuccessful } = state;
+  const state = useSelector((state) => state?.categories);
+  const { submitSuccessful, categoryList } = state;
+
+  console.log(categoryList);
 
   return (
     <Container className={classes.container}>
       <Grid container>
         <Grid item xs={12}>
           <div className={classes.contentCont}>
-            <h1 className={classes.title}>New Category</h1>
+            <h1 className={classes.title}>Categories</h1>
             <form onSubmit={onHandleSubmit} className={classes.form}>
               <TextField
                 value={category.title}
@@ -51,11 +70,31 @@ const AddCategory = () => {
                 Add New Category <AddIcon className={classes.addIcon} />
               </Button>
             </form>
-            {success && submitSuccessful ? (
-              <Alert className={classes.successMsg} severity="success">
-                Category was successfully created!
-              </Alert>
-            ) : null}
+            <div className={classes.successMsgCont}>
+              {success && submitSuccessful ? (
+                <Alert className={classes.successMsg} severity="success">
+                  Category was successfully created!
+                </Alert>
+              ) : null}
+            </div>
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <div className={classes.categoriesCont}>
+            {categoryList?.map((el) => (
+              <Button
+                style={{
+                  background: `${
+                    colors[Math.floor(Math.random() * colors.length)]
+                  }`,
+                }}
+                variant="contained"
+                className={classes.categoriesItem}
+                key={el._id}
+              >
+                {el.title}
+              </Button>
+            ))}
           </div>
         </Grid>
       </Grid>
