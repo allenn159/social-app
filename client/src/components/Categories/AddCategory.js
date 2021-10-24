@@ -8,6 +8,7 @@ import {
   createCategoryAction,
   fetchCategoriesAction,
 } from "../../Redux/slices/categories/categoriesSlice";
+import { Link } from "react-router-dom";
 
 const AddCategory = () => {
   const [category, setCategory] = useState({
@@ -91,6 +92,8 @@ const AddCategory = () => {
                 variant="contained"
                 className={classes.categoriesItem}
                 key={el._id}
+                component={Link}
+                to={`/category/${el._id}`}
               >
                 {el.title}
               </Button>

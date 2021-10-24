@@ -5,6 +5,7 @@ import Register from "./components/Users/Register/Register";
 import Login from "./components/Users/Login/Login";
 import NavBar from "./components/NavBar/";
 import AddCategory from "./components/Categories/AddCategory";
+import Category from "./components/Categories/Category";
 
 import "./App.css";
 
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/add-category" component={AddCategory} />
+        <Route exact path="/category/:id" component={Category} />
       </Switch>
     </Router>
   );
