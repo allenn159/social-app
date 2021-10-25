@@ -12,7 +12,7 @@ const filter = new Filter();
 //--------------------------------
 
 const createPostCtrl = expressAsyncHandler(async (req, res) => {
-  const { _id } = req.user;
+  const { _id } = req?.user;
   //   validateMongodbID(req.body.user);
   // Check for profane words in the post.
   const isProfane = filter.isProfane(req.body.title, req.body.description);
@@ -30,10 +30,8 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
       image: uploadedImg?.url,
       user: _id,
     });
-    res.send(post);
-
-    // Remove uploaded images in local file.
-    fs.unlinkSync(localPath);
+    // fs.unlinkSync is used to remove uploaded images in local file.
+    res.send(post, fs.unlinkSync(localPath));
   } catch (error) {
     res.send(error);
   }

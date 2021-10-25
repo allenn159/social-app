@@ -16,8 +16,6 @@ const UserNav = () => {
           <h3 className={classes.title}>uBlog</h3>
           <div className={classes.buttonCont}>
             <Button className={classes.button}>Home</Button>
-            <Button className={classes.button}>Create</Button>
-            <Button className={classes.button}>Posts</Button>
             <Button className={classes.button}>Explore</Button>
             <Button
               component={Link}

@@ -43,7 +43,7 @@ export default makeStyles((theme) => ({
   },
   inputField: {
     marginBottom: "20px",
-    width: "110%",
+    width: "120%",
   },
   button: {
     margin: "10px 0 30px 0 ",
