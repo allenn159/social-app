@@ -1,6 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { baseUrl } from "../../../utils/baseUrl";
+
+// Action to redirect
+const resetPostAction = createAction("post/reset");
 
 // Create Post Action
 
@@ -18,6 +21,8 @@ export const createPostAction = createAsyncThunk(
     };
     try {
       const { data } = await axios.post(`${baseUrl}/api/posts`, post, config);
+      // Creates an action in the state
+      dispatch(resetPostAction());
       return data;
     } catch (error) {
       if (!error?.response) throw error;
@@ -37,8 +42,13 @@ const postSlice = createSlice({
       state.appErr = undefined;
       state.serverErr = undefined;
     });
+    // Dispatch action to redirect
+    builder.addCase(resetPostAction, (state, action) => {
+      state.isSubmitted = true;
+    });
     builder.addCase(createPostAction.fulfilled, (state, action) => {
       state.postCreated = action?.payload;
+      state.isSubmitted = false;
       state.appErr = undefined;
       state.serverErr = undefined;
       state.loading = false;

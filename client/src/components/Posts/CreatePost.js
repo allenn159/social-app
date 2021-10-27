@@ -3,17 +3,17 @@ import { Container, Grid, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "../../Redux/slices/posts/postSlices";
 import { fetchCategoryAction } from "../../Redux/slices/categories/categoriesSlice";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 
 const CreatePost = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.post);
+  const { isSubmitted } = useSelector((state) => state.post);
   const { category } = useSelector((state) => state.categories);
   const [post, setPost] = useState({
     title: "",
     description: "",
-    category: category?.title,
+    category: "",
   });
 
   const onHandleSubmit = (e) => {
@@ -21,11 +21,15 @@ const CreatePost = () => {
     dispatch(createPostAction(post));
   };
 
-  console.log(post);
-
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
   }, []);
+
+  useEffect(() => {
+    setPost({ ...post, category: category?.title });
+  }, [category]);
+
+  if (isSubmitted) return <Redirect to={`/category/${id}`} />;
 
   return (
     <Container maxWidth="md">

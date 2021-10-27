@@ -31,7 +31,8 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
       user: _id,
     });
     // fs.unlinkSync is used to remove uploaded images in local file.
-    res.send(post, fs.unlinkSync(localPath));
+    res.send(post);
+    // fs.unlinkSync(localPath);
   } catch (error) {
     res.send(error);
   }
