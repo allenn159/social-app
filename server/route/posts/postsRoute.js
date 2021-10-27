@@ -25,8 +25,8 @@ postRoute.post(
 );
 postRoute.put("/likes", authMiddleware, toggleLikePostCtrl);
 postRoute.put("/dislikes", authMiddleware, toggleDislikePostctrl);
-postRoute.get("/", fetchPostsCtrl);
-postRoute.get("/:id", fetchPostCtrl);
+postRoute.get("/:id", fetchPostsCtrl);
+// postRoute.get("/:id", fetchPostCtrl); to get single post
 postRoute.put("/:id", authMiddleware, updatePostCtrl);
 postRoute.delete("/:id", authMiddleware, deletePostCtrl);
 

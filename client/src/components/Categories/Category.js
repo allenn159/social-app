@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
+import PostList from "../Posts/PostsList";
+import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 import { Container, Grid, Paper, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryAction } from "../../Redux/slices/categories/categoriesSlice";
+import { fetchPostsAction } from "../../Redux/slices/posts/postSlices";
 import { useParams, Link } from "react-router-dom";
 
 const Category = () => {
@@ -11,7 +14,8 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
-  }, []);
+    dispatch(fetchPostsAction(id));
+  }, [dispatch]);
 
   const { categories } = state;
   const category = categories?.category;

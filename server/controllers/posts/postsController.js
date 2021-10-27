@@ -1,4 +1,5 @@
 const Post = require("../../model/post/Post");
+const Category = require("../../model/category/Category");
 const Filter = require("bad-words");
 const fs = require("fs");
 const expressAsyncHandler = require("express-async-handler");
@@ -43,11 +44,17 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
 //--------------------------------
 
 const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
+  const { id } = req?.params;
+  const category = await Category.findById(id);
   try {
     // The populate method attaches the user information to the specific post.
-    const posts = await Post.find({}).populate("user");
+    const posts = await Post.find({ category: category?.title }).populate(
+      "user"
+    );
     res.json(posts);
-  } catch (error) {}
+  } catch (error) {
+    res.json(error);
+  }
 });
 
 //--------------------------------
