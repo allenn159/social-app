@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, TextField, Button } from "@material-ui/core";
+import { Container, Grid, TextField, Button, Paper } from "@material-ui/core";
 import Alert from "@mui/material/Alert";
 import useStyles from "./styles";
 import AddIcon from "@mui/icons-material/Add";
@@ -38,12 +38,10 @@ const AddCategory = () => {
 
   useEffect(() => {
     dispatch(fetchCategoriesAction());
-  }, [dispatch]);
+  }, [dispatch, success]);
 
   const state = useSelector((state) => state?.categories);
-  const { submitSuccessful, categoryList } = state;
-
-  console.log(categoryList);
+  const { submitSuccessful, categoryList, loading } = state;
 
   return (
     <Container className={classes.container}>

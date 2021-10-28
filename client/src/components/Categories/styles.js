@@ -1,18 +1,20 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
+  // AddCategory.js
   container: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
   contentCont: {
-    marginTop: "15vh",
+    marginTop: "10vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
+
   title: {
     fontFamily: "Mukta",
     fontSize: "3rem",
@@ -55,7 +57,7 @@ export default makeStyles((theme) => ({
     marginTop: "25px",
   },
   categoriesCont: {
-    marginTop: "10px",
+    marginTop: "15px",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -65,5 +67,20 @@ export default makeStyles((theme) => ({
     margin: "20px",
     fontFamily: "Mukta",
     fontSize: "25px",
+  },
+  // Category.js
+  categoryCont: {
+    marginTop: "100px",
+  },
+  categoryGrid: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "50px",
+  },
+  postListCont: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));

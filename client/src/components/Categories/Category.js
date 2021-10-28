@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import PostList from "../Posts/PostsList";
+import PostList from "../Posts/PostList";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 import { Container, Grid, Paper, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryAction } from "../../Redux/slices/categories/categoriesSlice";
 import { fetchPostsAction } from "../../Redux/slices/posts/postSlices";
 import { useParams, Link } from "react-router-dom";
+import useStyles from "./styles";
 
 const Category = () => {
+  const classes = useStyles();
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -19,17 +21,14 @@ const Category = () => {
 
   const { categories } = state;
   const category = categories?.category;
-  console.log(state);
-  console.log(categories.loading);
+  const { postList } = state?.post;
+
+  console.log(postList);
 
   return (
     <Container maxWidth="lg">
-      <Grid style={{ marginTop: "100px" }} container>
-        <Grid
-          style={{ display: "flex", justifyContent: "center" }}
-          item
-          xs={12}
-        >
+      <Grid className={classes.categoryCont} container>
+        <Grid className={classes.categoryGrid} item xs={12}>
           {categories.loading ? (
             <h1>Loading...</h1>
           ) : (
@@ -45,7 +44,9 @@ const Category = () => {
               </Button>
             </div>
           )}
-          <Paper></Paper>
+        </Grid>
+        <Grid className={classes.postListCont} item xs={12}>
+          <PostList postList={postList} />
         </Grid>
       </Grid>
     </Container>
