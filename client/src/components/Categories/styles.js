@@ -26,6 +26,9 @@ export default makeStyles((theme) => ({
   textField: {
     textAlign: "center",
     width: "400px",
+    [theme.breakpoints.down("sm")]: {
+      width: "250px",
+    },
   },
   button: {
     positon: "relative",
@@ -36,6 +39,9 @@ export default makeStyles((theme) => ({
     fontFamily: "Mukta",
     fontSize: "20px",
     marginTop: "20px",
+    [theme.breakpoints.down("sm")]: {
+      width: "250px",
+    },
   },
   addIcon: {
     position: "absolute",
@@ -49,9 +55,11 @@ export default makeStyles((theme) => ({
     marginTop: "25px",
   },
   categoriesCont: {
-    marginTop: "50px",
+    marginTop: "10px",
     display: "flex",
     flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
   },
   categoriesItem: {
     margin: "20px",

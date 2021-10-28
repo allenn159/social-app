@@ -1,32 +1,44 @@
-import React from "react";
-import { AppBar, Toolbar, Button } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Drawer,
+  Box,
+  List,
+  ListItem,
+} from "@material-ui/core";
 import useStyles from "./styles";
-import AddIcon from "@mui/icons-material/Add";
 import { useDispatch } from "react-redux";
 import { logoutUserAction } from "../../../Redux/slices/users/usersSlices";
 import { Link } from "react-router-dom";
+import Hamburger from "hamburger-react";
 
 const UserNav = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const onHandleDrawer = () => {
+    setOpenDrawer((openDrawer) => !openDrawer);
+  };
+
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolBar}>
+        <div className={classes.menuIcon}>
+          <Hamburger toggled={openDrawer} toggle={onHandleDrawer} />
+        </div>
         <div className={classes.contentCont}>
           <h3 className={classes.title}>uBlog</h3>
           <div className={classes.buttonCont}>
-            <Button className={classes.button}>Home</Button>
-            <Button className={classes.button}>Explore</Button>
+            <Button className={classes.button}>Profile</Button>
             <Button
               component={Link}
               to="/add-category"
-              className={classes.button}
+              className={classes.exploreBtn}
             >
-              Categories
-            </Button>
-            <Button variant="contained" className={classes.createPostBtn}>
-              New Post
-              <AddIcon className={classes.plusIcon} />
+              Explore
             </Button>
           </div>
         </div>
@@ -37,9 +49,34 @@ const UserNav = () => {
           >
             Logout
           </Button>
-          <p>Pic</p>
         </div>
       </Toolbar>
+      <Drawer anchor="left" open={openDrawer} onClose={onHandleDrawer}>
+        <Box className={classes.drawerBox}>
+          <List className={classes.drawerList}>
+            <h2 className={classes.drawerTitle}>uBlog</h2>
+            <Button variant="contained" className={classes.drawerBtn}>
+              Profile
+            </Button>
+            <Button
+              variant="contained"
+              component={Link}
+              to="/add-category"
+              className={classes.drawerBtn}
+              onClick={onHandleDrawer}
+            >
+              Explore
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => dispatch(logoutUserAction())}
+              className={classes.drawerBtn}
+            >
+              Logout
+            </Button>
+          </List>
+        </Box>
+      </Drawer>
     </AppBar>
   );
 };
