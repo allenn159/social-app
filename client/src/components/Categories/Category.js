@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import PostList from "../Posts/PostList";
 import { Container, Grid, Paper, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,16 +14,15 @@ const Category = () => {
   const { id } = useParams();
   const { categories } = state;
   const category = categories?.category;
-  const { postList, likes } = state?.post;
+  const { postList, likes, disLikes } = state?.post;
 
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
-    dispatch(fetchPostsAction(id));
   }, []);
 
   useEffect(() => {
     dispatch(fetchPostsAction(id));
-  }, [likes]);
+  }, [likes, disLikes]);
 
   return (
     <Container maxWidth="lg">

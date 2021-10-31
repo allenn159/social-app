@@ -73,6 +73,33 @@ export const toggleLikesAction = createAsyncThunk(
   }
 );
 
+// Toggle dislikes on post
+export const toggleDislikesAction = createAsyncThunk(
+  "post/dislikes",
+  async (postId, { rejectWithValue, getState, dispatch }) => {
+    // Retrieve user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      const { data } = await axios.put(
+        `${baseUrl}/api/posts/dislikes`,
+        postId,
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) throw error;
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Slice
 
 const postSlice = createSlice({
@@ -131,6 +158,23 @@ const postSlice = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(toggleLikesAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.error?.message;
+    });
+    // Toggle likes on post
+    builder.addCase(toggleDislikesAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(toggleDislikesAction.fulfilled, (state, action) => {
+      state.disLikes = action?.payload;
+      state.loading = false;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(toggleDislikesAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;

@@ -3,8 +3,11 @@ import { Paper } from "@material-ui/core";
 import useStyles from "./styles";
 import DateFormatter from "../../utils/DateFormatter";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
-import { toggleLikesAction } from "../../Redux/slices/posts/postSlices";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  toggleLikesAction,
+  toggleDislikesAction,
+} from "../../Redux/slices/posts/postSlices";
+import { useDispatch } from "react-redux";
 
 const PostList = ({ postList }) => {
   const dispatch = useDispatch();
@@ -31,6 +34,11 @@ const PostList = ({ postList }) => {
             style={{ width: "25px", cursor: "pointer" }}
           />
           <p>{el.likesCounter}</p>
+          <ThumbDownIcon
+            onClick={() => dispatch(toggleDislikesAction({ postId: el._id }))}
+            style={{ width: "25px", cursor: "pointer" }}
+          />
+          <p>{el.dislikesCounter}</p>
         </Paper>
       ))}
     </>

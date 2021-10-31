@@ -132,7 +132,9 @@ const toggleLikePostCtrl = expressAsyncHandler(async (req, res) => {
   // Find the login user
   const loginUserId = req?.user?._id;
   // Check if this user has liked a particular post.
-  const isLiked = post?.isLiked;
+  const isLiked = post?.likes.find(
+    (userId) => userId.toString() === loginUserId.toString()
+  );
   // Check if this user has disliked this particular post.
   const isDisliked = post?.disLikes?.find(
     (userId) => userId.toString() === loginUserId.toString()
@@ -149,6 +151,9 @@ const toggleLikePostCtrl = expressAsyncHandler(async (req, res) => {
         $pull: { disLikes: loginUserId },
         dislikesCounter: dislikesCounter === 0 ? 0 : dislikesCounter - 1,
         isDisliked: false,
+        $push: { likes: loginUserId },
+        likesCounter: likesCounter + 1,
+        isLiked: true,
       },
       { new: true }
     );
@@ -156,7 +161,7 @@ const toggleLikePostCtrl = expressAsyncHandler(async (req, res) => {
   }
   // Toggle
   // Remove the user if they have liked the post.
-  if (isLiked) {
+  else if (isLiked) {
     const post = await Post.findByIdAndUpdate(
       postId,
       {
@@ -193,7 +198,9 @@ const toggleDislikePostctrl = expressAsyncHandler(async (req, res) => {
   // Find the login user
   const loginUserId = req?.user?._id;
   // Check if this user has liked a particular post.
-  const isDisliked = post?.isDisliked;
+  const isDisliked = post?.disLikes?.find(
+    (userId) => userId.toString() === loginUserId.toString()
+  );
   // Check if this user has disliked this particular post.
   const isLiked = post?.likes?.find(
     (userId) => userId?.toString() === loginUserId.toString()
@@ -211,6 +218,9 @@ const toggleDislikePostctrl = expressAsyncHandler(async (req, res) => {
         $pull: { likes: loginUserId },
         likesCounter: likesCounter === 0 ? 0 : likesCounter - 1,
         isLiked: false,
+        $push: { disLikes: loginUserId },
+        dislikesCounter: dislikesCounter + 1,
+        isDisliked: true,
       },
       { new: true }
     );
@@ -218,7 +228,7 @@ const toggleDislikePostctrl = expressAsyncHandler(async (req, res) => {
   }
   // Toggle
   // Remove the user if they have disliked the post.
-  if (isDisliked) {
+  else if (isDisliked) {
     const post = await Post.findByIdAndUpdate(
       postId,
       {
