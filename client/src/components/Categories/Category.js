@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PostList from "../Posts/PostList";
-import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 import { Container, Grid, Paper, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryAction } from "../../Redux/slices/categories/categoriesSlice";
@@ -13,24 +12,25 @@ const Category = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { categories } = state;
+  const category = categories?.category;
+  const { postList, likes } = state?.post;
 
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
     dispatch(fetchPostsAction(id));
-  }, [dispatch]);
+  }, []);
 
-  const { categories } = state;
-  const category = categories?.category;
-  const { postList } = state?.post;
-
-  console.log(postList);
+  useEffect(() => {
+    dispatch(fetchPostsAction(id));
+  }, [likes]);
 
   return (
     <Container maxWidth="lg">
       <Grid className={classes.categoryCont} container>
         <Grid className={classes.categoryGrid} item xs={12}>
           {categories.loading ? (
-            <h1>Loading...</h1>
+            <h1>Loading</h1>
           ) : (
             <div>
               <h1>{category?.title}</h1>

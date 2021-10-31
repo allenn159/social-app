@@ -3,7 +3,7 @@ import Moment from "react-moment";
 
 const DateFormatter = ({ date }) => {
   return (
-    <Moment format="MMM D, YYYY HH:mm" withTitle>
+    <Moment format="MMM D, YYYY" withTitle>
       {date}
     </Moment>
   );

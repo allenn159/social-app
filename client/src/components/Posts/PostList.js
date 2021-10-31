@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Paper } from "@material-ui/core";
 import useStyles from "./styles";
 import DateFormatter from "../../utils/DateFormatter";
+import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
+import { toggleLikesAction } from "../../Redux/slices/posts/postSlices";
+import { useDispatch, useSelector } from "react-redux";
 
 const PostList = ({ postList }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   if (!postList) return <div>Loading...</div>;
 
   const items = [...postList];
+  items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  console.log(
-    items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  );
   return (
     <>
       {items?.map((el) => (
@@ -24,6 +26,11 @@ const PostList = ({ postList }) => {
               <DateFormatter date={el.createdAt} />
             </time>
           </div>
+          <ThumbUpIcon
+            onClick={() => dispatch(toggleLikesAction({ postId: el._id }))}
+            style={{ width: "25px", cursor: "pointer" }}
+          />
+          <p>{el.likesCounter}</p>
         </Paper>
       ))}
     </>
