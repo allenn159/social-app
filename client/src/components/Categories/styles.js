@@ -70,7 +70,7 @@ export default makeStyles((theme) => ({
   },
   // Category.js
   categoryCont: {
-    marginTop: "100px",
+    marginTop: "60px",
   },
   categoryGrid: {
     display: "flex",
