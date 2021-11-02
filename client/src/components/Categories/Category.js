@@ -29,12 +29,12 @@ const Category = () => {
       <Grid className={classes.categoryCont} container>
         <Grid className={classes.categoryGrid} item xs={12}>
           {categories.loading ? (
-            <h1>Loading</h1>
+            <h1 className={classes.categoryTitle}>Loading</h1>
           ) : (
-            <div>
-              <h1>{category?.title}</h1>
+            <div className={classes.titleCont}>
+              <h1 className={classes.categoryTitle}>{category?.title}</h1>
               <Button
-                color="primary"
+                className={classes.btn}
                 variant="contained"
                 component={Link}
                 to={`/create-post/${category?._id}`}

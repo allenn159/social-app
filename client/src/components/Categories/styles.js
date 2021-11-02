@@ -83,4 +83,20 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  titleCont: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  categoryTitle: {
+    fontFamily: "Mukta",
+    fontSize: "50px",
+  },
+  btn: {
+    fontFamily: "Mukta",
+    fontSize: "20px",
+    color: "#fff",
+    background: "linear-gradient(45deg, #113CFC 30%, #1597E5 90%)",
+    boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
+  },
 }));

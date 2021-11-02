@@ -28,23 +28,32 @@ const PostList = ({ postList }) => {
           key={el._id}
           className={classes.paper}
         >
-          <div className={classes.postCont}>
-            <h2>{el.title}</h2>
-            <p>{el.description}</p>
-            <time>
+          <div className={classes.titleCont}>
+            <h2 className={classes.postTitle}>{el.title}</h2>
+            <p className={classes.postBody}>{el.description}</p>
+            <time className={classes.postDate}>
               <DateFormatter date={el.createdAt} />
             </time>
           </div>
-          <ThumbUpIcon
-            onClick={() => dispatch(toggleLikesAction({ postId: el._id }))}
-            style={{ width: "25px", cursor: "pointer" }}
-          />
-          <p>{el.likesCounter}</p>
-          <ThumbDownIcon
-            onClick={() => dispatch(toggleDislikesAction({ postId: el._id }))}
-            style={{ width: "25px", cursor: "pointer" }}
-          />
-          <p>{el.dislikesCounter}</p>
+
+          <div className={classes.iconsCont}>
+            <div className={classes.iconsDiv}>
+              <ThumbUpIcon
+                onClick={() => dispatch(toggleLikesAction({ postId: el._id }))}
+                className={classes.icons}
+              />
+              <span>{el.likesCounter}</span>
+            </div>
+            <div className={classes.iconsDiv}>
+              <ThumbDownIcon
+                onClick={() =>
+                  dispatch(toggleDislikesAction({ postId: el._id }))
+                }
+                className={classes.icons}
+              />
+              <span>{el.dislikesCounter}</span>
+            </div>
+          </div>
         </Paper>
       ))}
     </>
