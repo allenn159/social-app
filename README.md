@@ -3,3 +3,7 @@ This project is currently in production and has not been hosted. Due to this rea
 I have provided some images below to show my progress. Some currently implemented features include creating an account, login/logout, creating a category, and creating a post. 
 
 ![Image](frontpage.png)
+![Image](login.png)
+![Image](signup.png)
+![Image](category.png)
+![Image](singlecat.png)
