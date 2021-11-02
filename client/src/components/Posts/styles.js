@@ -6,6 +6,7 @@ export default makeStyles((theme) => ({
     minHeight: "150px",
     maxHeight: "400px",
     margin: "25px 0",
+    textDecoration: "none",
   },
   postCont: {
     marginLeft: "25px",

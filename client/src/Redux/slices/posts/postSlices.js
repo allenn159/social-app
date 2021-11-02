@@ -46,6 +46,21 @@ export const fetchPostsAction = createAsyncThunk(
   }
 );
 
+// Fetch single post data
+
+export const fetchSinglePostAction = createAsyncThunk(
+  "post/details",
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const { data } = await axios.get(`${baseUrl}/api/posts/single/${id}`);
+      return data;
+    } catch (error) {
+      if (!error?.response) throw error;
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Toggle likes on post
 export const toggleLikesAction = createAsyncThunk(
   "post/likes",
@@ -141,6 +156,23 @@ const postSlice = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(fetchPostsAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.error?.message;
+    });
+    // Fetch Single Post
+    builder.addCase(fetchSinglePostAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(fetchSinglePostAction.fulfilled, (state, action) => {
+      state.postDetails = action?.payload;
+      state.loading = false;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(fetchSinglePostAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;

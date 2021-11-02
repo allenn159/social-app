@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Paper } from "@material-ui/core";
+import React from "react";
+import { Paper, Button } from "@material-ui/core";
 import useStyles from "./styles";
 import DateFormatter from "../../utils/DateFormatter";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
@@ -8,6 +8,7 @@ import {
   toggleDislikesAction,
 } from "../../Redux/slices/posts/postSlices";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const PostList = ({ postList }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,12 @@ const PostList = ({ postList }) => {
   return (
     <>
       {items?.map((el) => (
-        <Paper key={el._id} className={classes.paper}>
+        <Paper
+          component={Link}
+          to={`/posts/${el._id}`}
+          key={el._id}
+          className={classes.paper}
+        >
           <div className={classes.postCont}>
             <h2>{el.title}</h2>
             <p>{el.description}</p>

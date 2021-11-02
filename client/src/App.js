@@ -8,6 +8,7 @@ import AddCategory from "./components/Categories/AddCategory";
 import Category from "./components/Categories/Category";
 import CreatePost from "./components/Posts/CreatePost";
 import ProtectedRoute from "./components/NavBar/ProtectedRoute/ProtectedRoute";
+import PostDetails from "./components/Posts/PostDetails";
 
 import "./App.css";
 
@@ -22,6 +23,7 @@ function App() {
         <ProtectedRoute exact path="/add-category" component={AddCategory} />
         <ProtectedRoute exact path="/category/:id" component={Category} />
         <ProtectedRoute exact path="/create-post/:id" component={CreatePost} />
+        <ProtectedRoute exact path="/posts/:id" component={PostDetails} />
       </Switch>
     </Router>
   );
