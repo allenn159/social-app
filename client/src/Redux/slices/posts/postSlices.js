@@ -20,6 +20,7 @@ export const createPostAction = createAsyncThunk(
       },
     };
     try {
+      // Second argument is the payload.
       const { data } = await axios.post(`${baseUrl}/api/posts`, post, config);
       // Creates an action in the state
       dispatch(resetPostAction());
@@ -107,6 +108,31 @@ export const toggleDislikesAction = createAsyncThunk(
         postId,
         config
       );
+      return data;
+    } catch (error) {
+      if (!error?.response) throw error;
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Delete Post Action
+
+export const deletePostAction = createAsyncThunk(
+  "post/delete",
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    // Retrieve user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    try {
+      const { data } = await axios.delete(`${baseUrl}/api/posts/${id}`, config);
+
       return data;
     } catch (error) {
       if (!error?.response) throw error;
@@ -207,6 +233,23 @@ const postSlice = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(toggleDislikesAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.error?.message;
+    });
+    // Delete post
+    builder.addCase(deletePostAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(deletePostAction.fulfilled, (state, action) => {
+      state.postDeleted = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+      state.loading = false;
+    });
+    builder.addCase(deletePostAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;

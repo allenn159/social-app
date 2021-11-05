@@ -88,6 +88,11 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
   },
+  loadingTitle: {
+    textAlign: "center",
+    marginTop: "100px",
+    fontFamily: "Mukta",
+  },
   categoryTitle: {
     fontFamily: "Mukta",
     fontSize: "50px",

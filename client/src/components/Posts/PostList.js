@@ -22,18 +22,33 @@ const PostList = ({ postList }) => {
   return (
     <>
       {items?.map((el) => (
-        <Paper key={el._id} className={classes.paper}>
+        <Paper
+          component={Link}
+          to={`/posts/${el._id}`}
+          key={el._id}
+          className={classes.paper}
+        >
           <div className={classes.titleCont}>
             <h2 className={classes.postTitle}>{el.title}</h2>
-            <div className={classes.postBody}>{el.description}</div>
+            <div
+              component={Link}
+              to={`/posts/${el._id}`}
+              className={classes.postBody}
+            >
+              {el.description}
+            </div>
             <time className={classes.postDate}>
               <DateFormatter date={el.createdAt} />
             </time>
           </div>
 
-          <div className={classes.iconsCont}>
+          <div
+            onClick={(e) => e.preventDefault()}
+            className={classes.iconsCont}
+          >
             <div className={classes.upDiv}>
               <span>{el.likesCounter}</span>
+
               <ThumbUpIcon
                 onClick={() => dispatch(toggleLikesAction({ postId: el._id }))}
                 className={classes.upIcon}
@@ -41,6 +56,7 @@ const PostList = ({ postList }) => {
             </div>
             <div className={classes.downDiv}>
               <span>{el.dislikesCounter}</span>
+
               <ThumbDownIcon
                 onClick={() =>
                   dispatch(toggleDislikesAction({ postId: el._id }))

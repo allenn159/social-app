@@ -26,11 +26,11 @@ const Category = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid className={classes.categoryCont} container>
-        <Grid className={classes.categoryGrid} item xs={12}>
-          {categories.loading ? (
-            <h1 className={classes.categoryTitle}>Loading</h1>
-          ) : (
+      {categories.loading ? (
+        <h1 className={classes.loadingTitle}>Loading...</h1>
+      ) : (
+        <Grid className={classes.categoryCont} container>
+          <Grid className={classes.categoryGrid} item xs={12}>
             <div className={classes.titleCont}>
               <h1 className={classes.categoryTitle}>{category?.title}</h1>
               <Button
@@ -42,12 +42,12 @@ const Category = () => {
                 New Post
               </Button>
             </div>
-          )}
+          </Grid>
+          <Grid className={classes.postListCont} item xs={12}>
+            <PostList postList={postList} />
+          </Grid>
         </Grid>
-        <Grid className={classes.postListCont} item xs={12}>
-          <PostList postList={postList} />
-        </Grid>
-      </Grid>
+      )}
     </Container>
   );
 };
