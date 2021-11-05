@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, Button } from "@material-ui/core";
 import useStyles from "./styles";
 import DateFormatter from "../../utils/DateFormatter";
-import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
+import { ThumbUpIcon, ThumbDownIcon } from "@heroicons/react/solid";
 import {
   toggleLikesAction,
   toggleDislikesAction,
@@ -30,39 +30,37 @@ const PostList = ({ postList }) => {
         >
           <div className={classes.titleCont}>
             <h2 className={classes.postTitle}>{el.title}</h2>
-            <div
-              component={Link}
-              to={`/posts/${el._id}`}
-              className={classes.postBody}
-            >
-              {el.description}
-            </div>
-            <time className={classes.postDate}>
-              <DateFormatter date={el.createdAt} />
-            </time>
+            <div className={classes.postBody}>{el.description}</div>
           </div>
 
           <div
             onClick={(e) => e.preventDefault()}
-            className={classes.iconsCont}
+            className={classes.lowerCont}
           >
-            <div className={classes.upDiv}>
-              <span>{el.likesCounter}</span>
+            <time className={classes.postDate}>
+              <DateFormatter date={el.createdAt} />
+            </time>
+            <div className={classes.iconsCont}>
+              <div className={classes.upIconCont}>
+                <span>{el.likesCounter}</span>
+                <ThumbUpIcon
+                  onClick={() =>
+                    dispatch(toggleLikesAction({ postId: el._id }))
+                  }
+                  className={classes.upIcon}
+                />
+              </div>
 
-              <ThumbUpIcon
-                onClick={() => dispatch(toggleLikesAction({ postId: el._id }))}
-                className={classes.upIcon}
-              />
-            </div>
-            <div className={classes.downDiv}>
-              <span>{el.dislikesCounter}</span>
+              <div className={classes.downIconCont}>
+                <span>{el.dislikesCounter}</span>
 
-              <ThumbDownIcon
-                onClick={() =>
-                  dispatch(toggleDislikesAction({ postId: el._id }))
-                }
-                className={classes.downIcon}
-              />
+                <ThumbDownIcon
+                  onClick={() =>
+                    dispatch(toggleDislikesAction({ postId: el._id }))
+                  }
+                  className={classes.downIcon}
+                />
+              </div>
             </div>
           </div>
         </Paper>

@@ -4,32 +4,34 @@ export default makeStyles((theme) => ({
   paper: {
     width: "75%",
     margin: "25px 0",
+    padding: "20px",
     textDecoration: "none",
     display: "flex",
-    justifyContent: "space-between",
+    flexDirection: "column",
     fontFamily: "Mukta",
     [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
       width: "95%",
     },
   },
   titleCont: {
     padding: "10px",
   },
+  lowerCont: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+  },
   iconsCont: {
     display: "flex",
-    alignItems: "flex-end",
-    margin: "0 10px 10px 0",
-    [theme.breakpoints.down("sm")]: {
-      margin: "0 0 20px 5px",
-    },
+    alignItems: "center",
   },
-  upDiv: {
+  upIconCont: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    marginRight: "25px",
   },
-  downDiv: {
+  downIconCont: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -37,11 +39,30 @@ export default makeStyles((theme) => ({
   upIcon: {
     width: "30px",
     cursor: "pointer",
-    marginRight: "15px",
+    [theme.breakpoints.up("sm")]: {
+      "&:hover": {
+        color: "#54E346",
+      },
+    },
   },
   downIcon: {
     width: "30px",
     cursor: "pointer",
+    [theme.breakpoints.up("sm")]: {
+      "&:hover": {
+        color: "#f00",
+      },
+    },
+  },
+  positive: {
+    width: "30px",
+    cursor: "pointer",
+    color: "#54E346",
+  },
+  negative: {
+    width: "30px",
+    cursor: "pointer",
+    color: "#f00",
   },
   postTitle: {
     margin: 0,
@@ -62,5 +83,28 @@ export default makeStyles((theme) => ({
   postDate: {
     fontSize: "15px",
     marginBottom: "20px",
+  },
+
+  // Post Details
+
+  detailsCont: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  detailsPaper: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "10vh",
+    padding: "20px",
+    width: "60%",
+    fontFamily: "Mukta",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      width: "95%",
+    },
+  },
+  detailsBody: {
+    margin: "20px 0",
+    fontSize: "20px",
   },
 }));
