@@ -40,7 +40,11 @@ const PostDetails = () => {
                 onClick={() =>
                   dispatch(toggleLikesAction({ postId: postDetails?._id }))
                 }
-                className={classes.upIcon}
+                className={
+                  postDetails?.likesCounter > postDetails?.dislikesCounter
+                    ? classes.positive
+                    : classes.upIcon
+                }
               />
             </div>
 
@@ -51,7 +55,11 @@ const PostDetails = () => {
                 onClick={() =>
                   dispatch(toggleDislikesAction({ postId: postDetails?._id }))
                 }
-                className={classes.downIcon}
+                className={
+                  postDetails?.dislikesCounter > postDetails?.likesCounter
+                    ? classes.negative
+                    : classes.downIcon
+                }
               />
             </div>
           </div>

@@ -47,7 +47,11 @@ const PostList = ({ postList }) => {
                   onClick={() =>
                     dispatch(toggleLikesAction({ postId: el._id }))
                   }
-                  className={classes.upIcon}
+                  className={
+                    el.likesCounter > el.dislikesCounter
+                      ? classes.positive
+                      : classes.upIcon
+                  }
                 />
               </div>
 
@@ -58,7 +62,11 @@ const PostList = ({ postList }) => {
                   onClick={() =>
                     dispatch(toggleDislikesAction({ postId: el._id }))
                   }
-                  className={classes.downIcon}
+                  className={
+                    el.dislikesCounter > el.likesCounter
+                      ? classes.negative
+                      : classes.downIcon
+                  }
                 />
               </div>
             </div>

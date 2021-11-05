@@ -107,4 +107,48 @@ export default makeStyles((theme) => ({
     margin: "20px 0",
     fontSize: "20px",
   },
+  // Create Post
+  gridCont: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "5vh",
+    fontFamily: "Mukta",
+  },
+  formCont: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  formHeader: {
+    fontSize: "50px",
+  },
+  formTitle: {
+    width: "50%",
+    marginBottom: "20px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+  },
+  formBody: {
+    width: "75%",
+    marginBottom: "20px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+  },
+  formBtn: {
+    background: "linear-gradient(45deg, #113CFC 30%, #1597E5 90%)",
+    boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
+    fontFamily: "Mukta",
+    fontSize: "20px",
+    color: "#fff",
+    width: "25%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+  },
 }));

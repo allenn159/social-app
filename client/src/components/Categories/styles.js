@@ -8,7 +8,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
   },
   contentCont: {
-    marginTop: "10vh",
+    marginTop: "5vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
 
   title: {
     fontFamily: "Mukta",
-    fontSize: "3rem",
+    fontSize: "50px",
   },
   form: {
     display: "flex",
