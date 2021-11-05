@@ -6,7 +6,7 @@ const NavBar = () => {
   //get user from store
   const state = useSelector((state) => state?.users);
   const { userAuth } = state;
-  const isAdmin = userAuth?.isAdmin;
+  // const isAdmin = userAuth?.isAdmin;
   return <>{!userAuth ? null : <UserNav />}</>;
 };
 

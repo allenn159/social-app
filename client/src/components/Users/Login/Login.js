@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../Redux/slices/users/usersSlices";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, Paper, TextField, Button } from "@material-ui/core";
 import useStyles from "./styles";
 
@@ -25,7 +25,7 @@ const Login = () => {
   //redirect after login
   const storeData = useSelector((state) => state?.users);
   console.log(storeData);
-  const { userAuth, loading, appErr } = storeData;
+  const { appErr } = storeData;
 
   // if (userAuth) return <Redirect to="profile" />;
 

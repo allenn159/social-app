@@ -23,7 +23,7 @@ const CreatePost = () => {
 
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
     setPost({ ...post, category: category?.title });

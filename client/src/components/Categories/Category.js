@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PostList from "../Posts/PostList";
-import { Container, Grid, Paper, TextField, Button } from "@material-ui/core";
+import { Container, Grid, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoryAction } from "../../Redux/slices/categories/categoriesSlice";
 import { fetchPostsAction } from "../../Redux/slices/posts/postSlices";
@@ -18,11 +18,11 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
-  }, []);
+  }, [id, dispatch]);
 
   useEffect(() => {
     dispatch(fetchPostsAction(id));
-  }, [likes, disLikes]);
+  }, [likes, disLikes, dispatch, id]);
 
   return (
     <Container maxWidth="lg">

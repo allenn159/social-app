@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Button } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import useStyles from "./styles";
 import DateFormatter from "../../utils/DateFormatter";
 import { ThumbUpIcon, ThumbDownIcon } from "@heroicons/react/solid";

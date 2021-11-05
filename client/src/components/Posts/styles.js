@@ -94,12 +94,12 @@ export default makeStyles((theme) => ({
   detailsPaper: {
     display: "flex",
     justifyContent: "space-between",
+    flexDirection: "column",
     marginTop: "10vh",
     padding: "20px",
     width: "60%",
     fontFamily: "Mukta",
     [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
       width: "95%",
     },
   },

@@ -19,7 +19,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     dispatch(fetchSinglePostAction(id));
-  }, [id, dispatch, toggleLikesAction(), toggleDislikesAction()]);
+  }, [id, dispatch, postDetails]);
 
   return (
     <div className={classes.detailsCont}>
@@ -27,31 +27,33 @@ const PostDetails = () => {
         <div className={classes.titleCont}>
           <h2 className={classes.postTitle}>{postDetails?.title}</h2>
           <div className={classes.detailsBody}>{postDetails?.description}</div>
+        </div>
+
+        <div className={classes.lowerCont}>
           <time className={classes.postDate}>
             <DateFormatter date={postDetails?.createdAt} />
           </time>
-        </div>
+          <div className={classes.iconsCont}>
+            <div className={classes.upIconCont}>
+              <span>{postDetails?.likesCounter}</span>
+              <ThumbUpIcon
+                onClick={() =>
+                  dispatch(toggleLikesAction({ postId: postDetails?._id }))
+                }
+                className={classes.upIcon}
+              />
+            </div>
 
-        <div onClick={(e) => e.preventDefault()} className={classes.iconsCont}>
-          <div className={classes.upDiv}>
-            <span>{postDetails?.likesCounter}</span>
+            <div className={classes.downIconCont}>
+              <span>{postDetails?.dislikesCounter}</span>
 
-            <ThumbUpIcon
-              onClick={() =>
-                dispatch(toggleLikesAction({ postId: postDetails?._id }))
-              }
-              className={classes.upIcon}
-            />
-          </div>
-          <div className={classes.downDiv}>
-            <span>{postDetails?.dislikesCounter}</span>
-
-            <ThumbDownIcon
-              onClick={() =>
-                dispatch(toggleDislikesAction({ postId: postDetails?._id }))
-              }
-              className={classes.downIcon}
-            />
+              <ThumbDownIcon
+                onClick={() =>
+                  dispatch(toggleDislikesAction({ postId: postDetails?._id }))
+                }
+                className={classes.downIcon}
+              />
+            </div>
           </div>
         </div>
       </Paper>

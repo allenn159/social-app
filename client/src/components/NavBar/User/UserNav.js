@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Drawer,
-  Box,
-  List,
-  ListItem,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Button, Drawer, Box, List } from "@material-ui/core";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 import { logoutUserAction } from "../../../Redux/slices/users/usersSlices";
