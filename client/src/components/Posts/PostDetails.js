@@ -12,19 +12,28 @@ import {
   toggleDislikesAction,
   deletePostAction,
 } from "../../Redux/slices/posts/postSlices";
+import CreateComment from "../Comments/CreateComment";
 
 const PostDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { postDetails } = useSelector((state) => state?.post);
+  const { postDetails, likes, disLikes } = useSelector((state) => state?.post);
   const { post } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchSinglePostAction(id));
-  }, [id, dispatch, postDetails]);
+  }, [id, dispatch, likes, disLikes]);
 
-  if (!postDetails) return <div>Loading...</div>;
+  // Check to see if logged in user matches the creator of the post.
+  // Only the original author can delete the post.
+  const user = useSelector((state) => state?.users);
+  const { userAuth } = user;
+
+  const isCreatedBy = postDetails?.user?._id === userAuth?._id;
+
+  if (post?.isLoading)
+    return <div style={{ marginTop: "200px" }}>Loading...</div>;
 
   if (post?.isDeleted)
     return <Redirect to={`/category/${postDetails?.category}`} />;
@@ -35,10 +44,12 @@ const PostDetails = () => {
         <div className={classes.titleCont}>
           <h2 className={classes.postTitle}>{postDetails?.title}</h2>
           <div className={classes.detailsBody}>{postDetails?.description}</div>
-          <DeleteIcon
-            onClick={() => dispatch(deletePostAction(id))}
-            style={{ cursor: "pointer" }}
-          />
+          {!isCreatedBy ? null : (
+            <DeleteIcon
+              onClick={() => dispatch(deletePostAction(id))}
+              style={{ cursor: "pointer" }}
+            />
+          )}
         </div>
 
         <div className={classes.lowerCont}>
@@ -77,6 +88,7 @@ const PostDetails = () => {
           </div>
         </div>
       </Paper>
+      <CreateComment />
     </div>
   );
 };

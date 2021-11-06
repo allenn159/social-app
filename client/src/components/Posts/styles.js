@@ -89,7 +89,8 @@ export default makeStyles((theme) => ({
 
   detailsCont: {
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
   },
   detailsPaper: {
     display: "flex",
