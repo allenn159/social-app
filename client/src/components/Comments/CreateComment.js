@@ -3,13 +3,16 @@ import { Paper, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import useStyles from "./styles";
 
-const CreateComment = () => {
+const CreateComment = ({ postId }) => {
   const classes = useStyles();
   const [comment, setComment] = useState({
-    postId: "",
+    postId: postId,
     description: "",
   });
-  const state = useSelector((state) => state);
+
+  useEffect(() => {
+    setComment({ ...comment, postId: postId });
+  }, [postId]);
 
   return (
     <Paper className={classes.paper}>

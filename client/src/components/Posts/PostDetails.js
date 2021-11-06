@@ -88,7 +88,7 @@ const PostDetails = () => {
           </div>
         </div>
       </Paper>
-      <CreateComment />
+      <CreateComment postId={postDetails?._id} />
     </div>
   );
 };
