@@ -108,12 +108,17 @@ export default makeStyles((theme) => ({
     fontSize: "20px",
   },
   // Create Post
+  formPaper: {
+    marginTop: "10vh",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "12vh",
+    },
+  },
   gridCont: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "5vh",
     fontFamily: "Mukta",
   },
   formCont: {
@@ -130,14 +135,14 @@ export default makeStyles((theme) => ({
     width: "50%",
     marginBottom: "20px",
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      width: "90%",
     },
   },
   formBody: {
     width: "75%",
     marginBottom: "20px",
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      width: "90%",
     },
   },
   formBtn: {
@@ -147,8 +152,9 @@ export default makeStyles((theme) => ({
     fontSize: "20px",
     color: "#fff",
     width: "25%",
+    marginBottom: "20px",
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
+      width: "90%",
     },
   },
 }));

@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
   gridContainer: {
     marginTop: "20vh",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "10vh",
+    },
   },
   gridItemOne: {
     display: "flex",

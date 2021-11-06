@@ -48,9 +48,7 @@ const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
   const category = await Category.findById(id);
   try {
     // The populate method attaches the user information to the specific post.
-    const posts = await Post.find({ category: category?.title }).populate(
-      "user"
-    );
+    const posts = await Post.find({ category: category?._id }).populate("user");
     res.json(posts);
   } catch (error) {
     res.json(error);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, TextField, Button } from "@material-ui/core";
+import { Container, Paper, Grid, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "../../Redux/slices/posts/postSlices";
 import { fetchCategoryAction } from "../../Redux/slices/categories/categoriesSlice";
@@ -28,49 +28,49 @@ const CreatePost = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    setPost({ ...post, category: category?.title });
+    setPost({ ...post, category: category?._id });
   }, [category]);
 
   if (isSubmitted) return <Redirect to={`/category/${id}`} />;
 
-  console.log(post);
-
   return (
     <Container maxWidth="md">
-      <Grid container>
-        <Grid className={classes.gridCont} item xs={12}>
-          <h1 className={classes.formHeader}>{category?.title}</h1>
-          <form className={classes.formCont} onSubmit={onHandleSubmit}>
-            <TextField
-              className={classes.formTitle}
-              value={post.title}
-              onChange={(e) => setPost({ ...post, title: e.target.value })}
-              required
-              variant="outlined"
-              label="Title"
-            />
-            <TextField
-              className={classes.formBody}
-              value={post.description}
-              onChange={(e) =>
-                setPost({ ...post, description: e.target.value })
-              }
-              required
-              variant="outlined"
-              label="Body"
-              multiline
-              minRows={15}
-            />
-            <Button
-              className={classes.formBtn}
-              type="submit"
-              variant="contained"
-            >
-              Submit Post
-            </Button>
-          </form>
+      <Paper className={classes.formPaper}>
+        <Grid container>
+          <Grid className={classes.gridCont} item xs={12}>
+            <h1 className={classes.formHeader}>{category?.title}</h1>
+            <form className={classes.formCont} onSubmit={onHandleSubmit}>
+              <TextField
+                className={classes.formTitle}
+                value={post.title}
+                onChange={(e) => setPost({ ...post, title: e.target.value })}
+                required
+                variant="outlined"
+                label="Title"
+              />
+              <TextField
+                className={classes.formBody}
+                value={post.description}
+                onChange={(e) =>
+                  setPost({ ...post, description: e.target.value })
+                }
+                required
+                variant="outlined"
+                label="Body"
+                multiline
+                minRows={15}
+              />
+              <Button
+                className={classes.formBtn}
+                type="submit"
+                variant="contained"
+              >
+                Submit Post
+              </Button>
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
+      </Paper>
     </Container>
   );
 };

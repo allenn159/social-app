@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { Paper } from "@material-ui/core";
-import { useParams } from "react-router";
+import { useParams, Redirect } from "react-router";
 import { fetchSinglePostAction } from "../../Redux/slices/posts/postSlices";
 import { useDispatch, useSelector } from "react-redux";
 import useStyles from "./styles";
 import DateFormatter from "../../utils/DateFormatter";
 import { ThumbUpIcon, ThumbDownIcon } from "@heroicons/react/solid";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   toggleLikesAction,
   toggleDislikesAction,
+  deletePostAction,
 } from "../../Redux/slices/posts/postSlices";
 
 const PostDetails = () => {
@@ -16,10 +18,16 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { postDetails } = useSelector((state) => state?.post);
+  const { post } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchSinglePostAction(id));
   }, [id, dispatch, postDetails]);
+
+  if (!postDetails) return <div>Loading...</div>;
+
+  if (post?.isDeleted)
+    return <Redirect to={`/category/${postDetails?.category}`} />;
 
   return (
     <div className={classes.detailsCont}>
@@ -27,6 +35,10 @@ const PostDetails = () => {
         <div className={classes.titleCont}>
           <h2 className={classes.postTitle}>{postDetails?.title}</h2>
           <div className={classes.detailsBody}>{postDetails?.description}</div>
+          <DeleteIcon
+            onClick={() => dispatch(deletePostAction(id))}
+            style={{ cursor: "pointer" }}
+          />
         </div>
 
         <div className={classes.lowerCont}>

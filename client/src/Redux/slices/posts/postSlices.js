@@ -4,6 +4,7 @@ import { baseUrl } from "../../../utils/baseUrl";
 
 // Action to redirect
 const resetPostAction = createAction("post/reset");
+const resetPostDelete = createAction("post/delete");
 
 // Create Post Action
 
@@ -132,7 +133,8 @@ export const deletePostAction = createAsyncThunk(
     };
     try {
       const { data } = await axios.delete(`${baseUrl}/api/posts/${id}`, config);
-
+      // dispatch
+      dispatch(resetPostDelete());
       return data;
     } catch (error) {
       if (!error?.response) throw error;
@@ -243,11 +245,15 @@ const postSlice = createSlice({
       state.appErr = undefined;
       state.serverErr = undefined;
     });
+    builder.addCase(resetPostDelete, (state, action) => {
+      state.isDeleted = true;
+    });
     builder.addCase(deletePostAction.fulfilled, (state, action) => {
       state.postDeleted = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
       state.loading = false;
+      state.isDeleted = false;
     });
     builder.addCase(deletePostAction.rejected, (state, action) => {
       state.loading = false;
