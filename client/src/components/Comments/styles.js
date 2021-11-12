@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
+  // Create Comment
   paper: {
     display: "flex",
     flexDirection: "column",
@@ -21,5 +22,36 @@ export default makeStyles((theme) => ({
     color: "#fff",
     background: "linear-gradient(45deg, #113CFC 30%, #1597E5 90%)",
     boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
+    width: "100%",
+  },
+  // Comment List
+  commentPaper: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "20px",
+    width: "60%",
+    padding: "20px",
+    fontFamily: "Mukta",
+    [theme.breakpoints.down("sm")]: {
+      width: "95%",
+    },
+  },
+  imgCont: {
+    display: "flex",
+    alignItems: "center",
+  },
+  img: {
+    height: "40px",
+    width: "40px",
+    borderRadius: "5px",
+    marginRight: "10px",
+  },
+  timeStampCont: {
+    display: "flex",
+    alignItems: "center",
+    fontSize: "12px",
+  },
+  timeStamp: {
+    marginRight: "3px",
   },
 }));

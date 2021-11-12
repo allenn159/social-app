@@ -13,6 +13,7 @@ import {
   deletePostAction,
 } from "../../Redux/slices/posts/postSlices";
 import CreateComment from "../Comments/CreateComment";
+import CommentList from "../Comments/CommentList";
 
 const PostDetails = () => {
   const classes = useStyles();
@@ -89,6 +90,7 @@ const PostDetails = () => {
         </div>
       </Paper>
       <CreateComment postId={postDetails?._id} />
+      <CommentList comments={postDetails?.comments} />
     </div>
   );
 };

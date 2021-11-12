@@ -15,8 +15,8 @@ const createCommentCtrl = expressAsyncHandler(async (req, res) => {
   try {
     const comment = await Comment.create({
       post: postId,
-      user,
       description,
+      user,
     });
     res.json(comment);
   } catch (error) {

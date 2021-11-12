@@ -49,6 +49,7 @@ const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
   try {
     // The populate method attaches the user information to the specific post.
     const posts = await Post.find({ category: category?._id }).populate("user");
+
     res.json(posts);
   } catch (error) {
     res.json(error);
@@ -63,7 +64,7 @@ const fetchPostCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongodbID(id);
   try {
-    const post = await Post.findById(id).populate("user");
+    const post = await Post.findById(id).populate("user").populate("comments");
     // Update number of views.
     await Post.findByIdAndUpdate(
       post.id,
