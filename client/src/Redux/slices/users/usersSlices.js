@@ -60,6 +60,38 @@ export const loginUserAction = createAsyncThunk(
   }
 );
 
+// Retrieve Profile
+//Create category
+
+export const fetchProfileAction = createAsyncThunk(
+  "user/profile",
+  async (id, { rejectWithValue, getState, dispatch }) => {
+    // Retrieve user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    // Http call
+    // Need login token to submit request. You can get this from getState
+    try {
+      const { data } = await axios.get(
+        `${baseUrl}/api/users/profile/${id}`,
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Logout action
 export const logoutUserAction = createAsyncThunk(
   "user/logout",
@@ -121,7 +153,21 @@ const usersSlices = createSlice({
       // Error with the application
       state.appErr = action?.payload?.message;
     });
-
+    // Profile
+    builder.addCase(fetchProfileAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+    });
+    builder.addCase(fetchProfileAction.fulfilled, (state, action) => {
+      state.profile = action?.payload;
+      state.loading = false;
+      state.appErr = undefined;
+    });
+    builder.addCase(fetchProfileAction.rejected, (state, action) => {
+      state.loading = false;
+      // Error with the application
+      state.appErr = action?.payload?.message;
+    });
     //Logout
     builder.addCase(logoutUserAction.pending, (state, action) => {
       state.loading = true;
