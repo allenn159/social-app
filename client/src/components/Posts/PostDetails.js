@@ -21,10 +21,11 @@ const PostDetails = () => {
   const { id } = useParams();
   const { postDetails, likes, disLikes } = useSelector((state) => state?.post);
   const { post } = useSelector((state) => state);
+  const { comments } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchSinglePostAction(id));
-  }, [id, dispatch, likes, disLikes]);
+  }, [id, dispatch, likes, disLikes, comments]);
 
   // Check to see if logged in user matches the creator of the post.
   // Only the original author can delete the post.
@@ -39,9 +40,19 @@ const PostDetails = () => {
   if (post?.isDeleted)
     return <Redirect to={`/category/${postDetails?.category}`} />;
 
+  console.log(postDetails);
+
   return (
     <div className={classes.detailsCont}>
       <Paper className={classes.detailsPaper}>
+        <div className={classes.imgCont}>
+          <img
+            className={classes.img}
+            src={postDetails?.user?.profilePicture}
+            alt="profile picture"
+          />
+          <p>{postDetails?.user?.firstName}</p>
+        </div>
         <div className={classes.titleCont}>
           <h2 className={classes.postTitle}>{postDetails?.title}</h2>
           <div className={classes.detailsBody}>{postDetails?.description}</div>

@@ -43,7 +43,7 @@ export default makeStyles((theme) => ({
   img: {
     height: "40px",
     width: "40px",
-    borderRadius: "5px",
+    borderRadius: "50%",
     marginRight: "10px",
   },
   timeStampCont: {
@@ -53,5 +53,8 @@ export default makeStyles((theme) => ({
   },
   timeStamp: {
     marginRight: "3px",
+  },
+  deleteIcon: {
+    cursor: "pointer",
   },
 }));

@@ -28,6 +28,14 @@ const PostList = ({ postList }) => {
           key={el._id}
           className={classes.paper}
         >
+          <div className={classes.imgCont}>
+            <img
+              className={classes.img}
+              src={el.user.profilePicture}
+              alt="profile picture"
+            />
+            <p>{el.user.firstName}</p>
+          </div>
           <div className={classes.titleCont}>
             <h2 className={classes.postTitle}>{el.title}</h2>
             <div className={classes.postBody}>{el.description}</div>

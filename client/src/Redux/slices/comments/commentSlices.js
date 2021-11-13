@@ -37,22 +37,69 @@ export const createCommentAction = createAsyncThunk(
   }
 );
 
+// Delete comment action
+
+export const deleteCommentAction = createAsyncThunk(
+  "comment/delete",
+  async (commentId, { rejectWithValue, getState, dispatch }) => {
+    // Retrieve user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    // Http call
+    // Need login token to submit request. You can get this from getState
+    try {
+      const { data } = await axios.delete(
+        `${baseUrl}/api/comments/${commentId}`,
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 const commentSlices = createSlice({
-  name: "comment",
+  name: "comments",
   initialState: {},
   extraReducers: (builder) => {
-    builder.addCase(createCommentAction.pending, (action, state) => {
+    //Create comment
+    builder.addCase(createCommentAction.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(createCommentAction.fulfilled, (action, state) => {
+    builder.addCase(createCommentAction.fulfilled, (state, action) => {
       state.loading = false;
-      state.comment = action?.payload;
+      state.comments = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
     });
-    builder.addCase(createCommentAction.rejected, (action, state) => {
+    builder.addCase(createCommentAction.rejected, (state, action) => {
       state.loading = false;
-      state.comment = undefined;
+      state.comments = undefined;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.error?.message;
+    });
+    //Delete comment
+    builder.addCase(deleteCommentAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteCommentAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.commentedDeleted = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(deleteCommentAction.rejected, (state, action) => {
+      state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;
     });

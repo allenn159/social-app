@@ -13,8 +13,15 @@ export default makeStyles((theme) => ({
       width: "95%",
     },
   },
-  titleCont: {
-    padding: "10px",
+  imgCont: {
+    display: "flex",
+    alignItems: "center",
+  },
+  img: {
+    height: "40px",
+    width: "40px",
+    borderRadius: "50%",
+    marginRight: "10px",
   },
   lowerCont: {
     display: "flex",
@@ -67,9 +74,6 @@ export default makeStyles((theme) => ({
   postTitle: {
     margin: 0,
     fontSize: "30px",
-    [theme.breakpoints.down("sm")]: {
-      textAlign: "center",
-    },
   },
   postBody: {
     margin: "20px 0",
@@ -82,7 +86,7 @@ export default makeStyles((theme) => ({
   },
   postDate: {
     fontSize: "15px",
-    marginBottom: "20px",
+    marginBottom: "10px",
   },
 
   // Post Details
