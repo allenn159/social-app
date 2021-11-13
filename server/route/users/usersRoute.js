@@ -13,7 +13,6 @@ const {
   blockUserController,
   unblockUserController,
   generateVerificationTokenController,
-  accountVerificationController,
   generateForgetPasswordTokenController,
   passwordResetController,
   profilePictureUploadController,
@@ -51,11 +50,11 @@ userRoutes.post(
   authMiddleware,
   generateVerificationTokenController
 );
-userRoutes.put(
-  "/verify-account",
-  authMiddleware,
-  accountVerificationController
-);
+// userRoutes.put(
+//   "/verify-account",
+//   authMiddleware,
+//   accountVerificationController
+// );
 userRoutes.put("/block-user/:id", authMiddleware, blockUserController);
 userRoutes.put("/unblock-user/:id", authMiddleware, unblockUserController);
 userRoutes.put("/:id", authMiddleware, updateProfileController);

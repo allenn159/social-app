@@ -20,8 +20,12 @@ const userSchema = new mongoose.Schema(
       default:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     },
+    userName: {
+      required: [true, "Username is required"],
+      type: String,
+    },
     email: {
-      required: [true, "Email is required"],
+      required: [true, "email is required"],
       type: String,
     },
     biography: {
@@ -47,20 +51,20 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["Admin", "Guest", "Member"],
     },
-    isFollowing: {
-      type: Boolean,
-      default: false,
-    },
-    isUnFollowing: {
-      type: Boolean,
-      default: false,
-    },
-    isAccountVerified: {
-      type: Boolean,
-      default: false,
-    },
-    accountVerificationToken: String,
-    accountVerificationTokenExpires: Date,
+    // isFollowing: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // isUnFollowing: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // isAccountVerified: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // accountVerificationToken: String,
+    // accountVerificationTokenExpires: Date,
     // For data association. This is how we can relate information between multiple users. Referencing is important here.
     // Instead of pushing each individual user object into the type array, you can just pass a reference.
     viewedBy: {
@@ -146,21 +150,21 @@ userSchema.methods.isPasswordMatching = async function (pw) {
   return await bcrypt.compare(pw, this.password);
 };
 
-// Verify account
-userSchema.methods.createVerfificationToken = async function () {
-  // create a token
-  // these are node methods.
-  const verificationToken = crypto.randomBytes(32).toString("hex");
-  this.accountVerificationToken = crypto
-    .createHash("sha256")
-    .update(verificationToken)
-    .digest("hex");
+// // Verify account
+// userSchema.methods.createVerfificationToken = async function () {
+//   // create a token
+//   // these are node methods.
+//   const verificationToken = crypto.randomBytes(32).toString("hex");
+//   this.accountVerificationToken = crypto
+//     .createHash("sha256")
+//     .update(verificationToken)
+//     .digest("hex");
 
-  // token expires in ten minutes
-  this.accountVerificationTokenExpires = Date.now() + 30 * 60 * 1000;
+//   // token expires in ten minutes
+//   this.accountVerificationTokenExpires = Date.now() + 30 * 60 * 1000;
 
-  return verificationToken;
-};
+//   return verificationToken;
+// };
 
 //Password reset/forget token
 

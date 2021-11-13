@@ -19,17 +19,22 @@ sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
 //--------------------------------
 const userRegController = expressAsyncHandler(async (req, res) => {
   // Check if user exists with the email address
-  const userExists = await User.findOne({ email: req?.body?.email });
+  const emailExists = await User.findOne({
+    email: req?.body?.email.toLowerCase(),
+  });
+  const userNameExists = await User.findOne({ userName: req?.body?.userName });
   // Throw an error for user to see.
-  if (userExists) throw new Error("User already exists with entered email");
+  if (emailExists) throw new Error("User already exists with entered email");
+  if (userNameExists) throw new Error("User already exists with username");
 
   try {
     // Register User
     const user = await User.create({
       firstName: req?.body?.firstName,
       lastName: req?.body?.lastName,
-      email: req?.body?.email,
+      userName: req?.body?.userName,
       password: req?.body?.password,
+      email: req?.body?.email.toLowerCase(),
     });
     res.json(user);
   } catch (error) {
@@ -42,9 +47,9 @@ const userRegController = expressAsyncHandler(async (req, res) => {
 //--------------------------------
 
 const loginUserController = expressAsyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
   //check if user exists in database
-  const userFound = await User.findOne({ email });
+  const userFound = await User.findOne({ userName });
   //check if password is matching
   // the isPasswordMatching function is a method from the user model.
   if (userFound && (await userFound.isPasswordMatching(password))) {
@@ -53,6 +58,7 @@ const loginUserController = expressAsyncHandler(async (req, res) => {
       _id: userFound?._id,
       firstName: userFound?.firstName,
       lastName: userFound?.lastName,
+      userName: userFound?.userName,
       email: userFound?.email,
       profilePicture: userFound?.profilePicture,
       isAdmin: userFound?.isAdmin,
@@ -328,28 +334,28 @@ const generateVerificationTokenController = expressAsyncHandler(
 // Account verification
 //--------------------------------
 
-const accountVerificationController = expressAsyncHandler(async (req, res) => {
-  const { token } = req.body;
-  // Rehashing token again to find match in database.
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+// const accountVerificationController = expressAsyncHandler(async (req, res) => {
+//   const { token } = req.body;
+//   // Rehashing token again to find match in database.
+//   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
-  // Find the user by token
-  const userFound = await User.findOne({
-    accountVerificationToken: hashedToken,
-    // the gt will check to see if the current date is passed the token expiration date.
-    accountVerificationTokenExpires: { $gt: new Date() },
-  });
+//   // Find the user by token
+//   const userFound = await User.findOne({
+//     accountVerificationToken: hashedToken,
+//     // the gt will check to see if the current date is passed the token expiration date.
+//     accountVerificationTokenExpires: { $gt: new Date() },
+//   });
 
-  if (!userFound) throw new Error("Token expired, try again later.");
+//   if (!userFound) throw new Error("Token expired, try again later.");
 
-  // Update the account verified property to true.
-  userFound.isAccountVerified = true;
-  userFound.accountVerificationToken = undefined;
-  userFound.accountVerificationTokenExpires = undefined;
+//   // Update the account verified property to true.
+//   userFound.isAccountVerified = true;
+//   userFound.accountVerificationToken = undefined;
+//   userFound.accountVerificationTokenExpires = undefined;
 
-  await userFound.save();
-  res.json(userFound);
-});
+//   await userFound.save();
+//   res.json(userFound);
+// });
 
 //--------------------------------
 // Generate forget password token
@@ -453,7 +459,6 @@ module.exports = {
   blockUserController,
   unblockUserController,
   generateVerificationTokenController,
-  accountVerificationController,
   generateForgetPasswordTokenController,
   passwordResetController,
   profilePictureUploadController,

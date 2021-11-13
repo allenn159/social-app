@@ -8,13 +8,11 @@ import useStyles from "./styles";
 const Login = () => {
   const [error, setError] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
-    email: "",
+    userName: "",
     password: "",
   });
   const classes = useStyles();
   const dispatch = useDispatch();
-
-  console.log(loginInfo);
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +22,6 @@ const Login = () => {
 
   //redirect after login
   const storeData = useSelector((state) => state?.users);
-  console.log(storeData);
   const { appErr } = storeData;
 
   // if (userAuth) return <Redirect to="profile" />;
@@ -42,11 +39,11 @@ const Login = () => {
           ) : null}
           <form className={classes.formCont} onSubmit={onHandleSubmit}>
             <TextField
-              value={loginInfo.email}
+              value={loginInfo.userName}
               onChange={(e) =>
-                setLoginInfo({ ...loginInfo, email: e.target.value })
+                setLoginInfo({ ...loginInfo, userName: e.target.value })
               }
-              placeholder="Email"
+              placeholder="Username"
               variant="outlined"
               required
               className={classes.inputField}

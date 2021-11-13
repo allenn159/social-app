@@ -10,8 +10,9 @@ const Register = () => {
   const [formInfo, setFormInfo] = useState({
     firstName: "",
     lastName: "",
-    email: "",
+    userName: "",
     password: "",
+    email: "",
   });
   const classes = useStyles();
   //dispatch
@@ -65,12 +66,12 @@ const Register = () => {
               className={classes.inputField}
             />
             <TextField
-              value={formInfo.email}
+              value={formInfo.userName}
               onChange={(e) =>
-                setFormInfo({ ...formInfo, email: e.target.value })
+                setFormInfo({ ...formInfo, userName: e.target.value })
               }
               onFocus={() => setError(false)}
-              placeholder="Email"
+              placeholder="Username"
               variant="outlined"
               required
               className={classes.inputField}
@@ -83,6 +84,17 @@ const Register = () => {
               placeholder="Password"
               type="password"
               autoComplete="on"
+              variant="outlined"
+              required
+              className={classes.inputField}
+            />
+            <TextField
+              value={formInfo.email}
+              onChange={(e) =>
+                setFormInfo({ ...formInfo, email: e.target.value })
+              }
+              onFocus={() => setError(false)}
+              placeholder="Email"
               variant="outlined"
               required
               className={classes.inputField}
