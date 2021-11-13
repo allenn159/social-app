@@ -3,7 +3,6 @@ const {
   createPostCtrl,
   fetchPostsCtrl,
   fetchPostCtrl,
-  updatePostCtrl,
   deletePostCtrl,
   toggleLikePostCtrl,
   toggleDislikePostctrl,
@@ -27,7 +26,6 @@ postRoute.put("/likes", authMiddleware, toggleLikePostCtrl);
 postRoute.put("/dislikes", authMiddleware, toggleDislikePostctrl);
 postRoute.get("/:id", fetchPostsCtrl);
 postRoute.get("/single/:id", fetchPostCtrl); // to get single post
-postRoute.put("/:id", authMiddleware, updatePostCtrl);
 postRoute.delete("/:id", authMiddleware, deletePostCtrl);
 
 module.exports = postRoute;

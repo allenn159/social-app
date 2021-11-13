@@ -9,6 +9,7 @@ import Category from "./components/Categories/Category";
 import CreatePost from "./components/Posts/CreatePost";
 import ProtectedRoute from "./components/NavBar/ProtectedRoute/ProtectedRoute";
 import PostDetails from "./components/Posts/PostDetails";
+import Profile from "./components/Users/Profile/Profile";
 
 import "./App.css";
 
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+        <ProtectedRoute exact path="/profile/:id" component={Profile} />
         <ProtectedRoute exact path="/add-category" component={AddCategory} />
         <ProtectedRoute exact path="/category/:id" component={Category} />
         <ProtectedRoute exact path="/create-post/:id" component={CreatePost} />

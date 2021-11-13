@@ -42,40 +42,40 @@ const fetchCommentsCtrl = expressAsyncHandler(async (req, res) => {
 // Fetch single comment
 //--------------------------------
 
-const fetchSingleCommentCtrl = expressAsyncHandler(async (req, res) => {
-  const { id } = req.params;
-  validateMongodbID(id);
+// const fetchSingleCommentCtrl = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   validateMongodbID(id);
 
-  try {
-    const comment = await Comment.findById(id);
-    res.json(comment);
-  } catch (error) {
-    res.json(error);
-  }
-});
+//   try {
+//     const comment = await Comment.findById(id);
+//     res.json(comment);
+//   } catch (error) {
+//     res.json(error);
+//   }
+// });
 
 //--------------------------------
 // Update comment
 //--------------------------------
 
-const updateCommentCtrl = expressAsyncHandler(async (req, res) => {
-  const { id } = req.params;
-  validateMongodbID(id);
-  try {
-    const update = await Comment.findByIdAndUpdate(
-      id,
-      {
-        post: req.body?.postId,
-        user: req?.user,
-        description: req?.body?.description,
-      },
-      { new: true, runValidators: true }
-    );
-    res.json(update);
-  } catch (error) {
-    res.json(error);
-  }
-});
+// const updateCommentCtrl = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   validateMongodbID(id);
+//   try {
+//     const update = await Comment.findByIdAndUpdate(
+//       id,
+//       {
+//         post: req.body?.postId,
+//         user: req?.user,
+//         description: req?.body?.description,
+//       },
+//       { new: true, runValidators: true }
+//     );
+//     res.json(update);
+//   } catch (error) {
+//     res.json(error);
+//   }
+// });
 
 //--------------------------------
 // Delete comment
@@ -96,7 +96,5 @@ const deleteCommentCtrl = expressAsyncHandler(async (req, res) => {
 module.exports = {
   createCommentCtrl,
   fetchCommentsCtrl,
-  fetchSingleCommentCtrl,
-  updateCommentCtrl,
   deleteCommentCtrl,
 };

@@ -84,25 +84,25 @@ const fetchPostCtrl = expressAsyncHandler(async (req, res) => {
 // Update post
 //--------------------------------
 
-const updatePostCtrl = expressAsyncHandler(async (req, res) => {
-  const { id } = req.params;
-  validateMongodbID(id);
+// const updatePostCtrl = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   validateMongodbID(id);
 
-  try {
-    const post = await Post.findByIdAndUpdate(
-      id,
-      {
-        ...req.body,
-        // A user is required for a post on the model.
-        user: req.user?._id,
-      },
-      { new: true }
-    );
-    res.json(post);
-  } catch (error) {
-    res.json(error);
-  }
-});
+//   try {
+//     const post = await Post.findByIdAndUpdate(
+//       id,
+//       {
+//         ...req.body,
+//         // A user is required for a post on the model.
+//         user: req.user?._id,
+//       },
+//       { new: true }
+//     );
+//     res.json(post);
+//   } catch (error) {
+//     res.json(error);
+//   }
+// });
 
 //--------------------------------
 // Delete post
@@ -256,7 +256,6 @@ module.exports = {
   createPostCtrl,
   fetchPostsCtrl,
   fetchPostCtrl,
-  updatePostCtrl,
   deletePostCtrl,
   toggleLikePostCtrl,
   toggleDislikePostctrl,

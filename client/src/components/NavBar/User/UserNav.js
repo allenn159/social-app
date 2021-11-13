@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, Button, Drawer, Box, List } from "@material-ui/core";
 import useStyles from "./styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUserAction } from "../../../Redux/slices/users/usersSlices";
 import { Link } from "react-router-dom";
 import Hamburger from "hamburger-react";
@@ -10,6 +10,7 @@ const UserNav = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { userAuth } = useSelector((state) => state?.users);
 
   const onHandleDrawer = () => {
     setOpenDrawer((openDrawer) => !openDrawer);
@@ -24,7 +25,13 @@ const UserNav = () => {
         <div className={classes.contentCont}>
           <h3 className={classes.title}>uBlog</h3>
           <div className={classes.buttonCont}>
-            <Button className={classes.button}>Profile</Button>
+            <Button
+              component={Link}
+              to={`/profile/${userAuth?._id}`}
+              className={classes.button}
+            >
+              Profile
+            </Button>
             <Button
               component={Link}
               to="/add-category"

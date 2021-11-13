@@ -52,21 +52,21 @@ const fetchCategoryCtrl = expressAsyncHandler(async (req, res) => {
 // Update single category
 //--------------------------------
 
-const updateCategoryCtrl = expressAsyncHandler(async (req, res) => {
-  const { id } = req.params;
-  try {
-    const category = await Category.findByIdAndUpdate(
-      id,
-      {
-        title: req?.body?.title,
-      },
-      { new: true, runValidators: true }
-    );
-    res.json(category);
-  } catch (error) {
-    res.json(error);
-  }
-});
+// const updateCategoryCtrl = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const category = await Category.findByIdAndUpdate(
+//       id,
+//       {
+//         title: req?.body?.title,
+//       },
+//       { new: true, runValidators: true }
+//     );
+//     res.json(category);
+//   } catch (error) {
+//     res.json(error);
+//   }
+// });
 
 //--------------------------------
 // Delete single category
@@ -86,6 +86,5 @@ module.exports = {
   createCategoryCtrl,
   fetchCategoriesCtrl,
   fetchCategoryCtrl,
-  updateCategoryCtrl,
   deleteCategoryCtrl,
 };
