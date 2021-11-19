@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
     width: "60%",
     padding: "20px",
     [theme.breakpoints.down("sm")]: {
-      width: "95%",
+      width: "90%",
     },
   },
   inputField: {
@@ -33,7 +33,7 @@ export default makeStyles((theme) => ({
     padding: "20px",
     fontFamily: "Mukta",
     [theme.breakpoints.down("sm")]: {
-      width: "95%",
+      width: "90%",
     },
   },
   imgCont: {

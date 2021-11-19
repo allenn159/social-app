@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
   paper: {
     width: "75%",
-    margin: "25px 0",
+    marginBottom: "25px",
     padding: "20px",
     textDecoration: "none",
     display: "flex",
@@ -105,7 +105,7 @@ export default makeStyles((theme) => ({
     width: "60%",
     fontFamily: "Mukta",
     [theme.breakpoints.down("sm")]: {
-      width: "95%",
+      width: "90%",
     },
   },
   detailsBody: {

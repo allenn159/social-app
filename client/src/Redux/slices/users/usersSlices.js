@@ -92,6 +92,40 @@ export const fetchProfileAction = createAsyncThunk(
   }
 );
 
+// Upload profile photo
+export const updateProfilePictureAction = createAsyncThunk(
+  "user/profile-picture",
+  async (image, { rejectWithValue, getState, dispatch }) => {
+    // Retrieve user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    // Http call
+    // Need login token to submit request. You can get this from getState
+    try {
+      const formData = new FormData();
+      formData.append("image", image?.image);
+      console.log(formData);
+      const { data } = await axios.put(
+        `${baseUrl}/api/users/profile-picture-upload`,
+        formData,
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Logout action
 export const logoutUserAction = createAsyncThunk(
   "user/logout",
@@ -164,6 +198,21 @@ const usersSlices = createSlice({
       state.appErr = undefined;
     });
     builder.addCase(fetchProfileAction.rejected, (state, action) => {
+      state.loading = false;
+      // Error with the application
+      state.appErr = action?.payload?.message;
+    });
+    // Upload Profile Picture
+    builder.addCase(updateProfilePictureAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+    });
+    builder.addCase(updateProfilePictureAction.fulfilled, (state, action) => {
+      state.profile = action?.payload;
+      state.loading = false;
+      state.appErr = undefined;
+    });
+    builder.addCase(updateProfilePictureAction.rejected, (state, action) => {
       state.loading = false;
       // Error with the application
       state.appErr = action?.payload?.message;

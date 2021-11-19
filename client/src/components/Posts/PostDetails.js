@@ -51,7 +51,7 @@ const PostDetails = () => {
             src={postDetails?.user?.profilePicture}
             alt="profile picture"
           />
-          <p>{postDetails?.user?.firstName}</p>
+          <p>{postDetails?.user?.userName}</p>
         </div>
         <div className={classes.titleCont}>
           <h2 className={classes.postTitle}>{postDetails?.title}</h2>

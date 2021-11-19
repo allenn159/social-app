@@ -34,7 +34,7 @@ const PostList = ({ postList }) => {
               src={el.user.profilePicture}
               alt="profile picture"
             />
-            <p>{el.user.firstName}</p>
+            <p>{el.user.userName}</p>
           </div>
           <div className={classes.titleCont}>
             <h2 className={classes.postTitle}>{el.title}</h2>
