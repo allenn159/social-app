@@ -23,7 +23,7 @@ export default makeStyles((theme) => ({
     height: "150px",
     width: "150px",
     marginRight: "25px",
-    borderRadius: "25%",
+    borderRadius: "5px",
     cursor: "pointer",
   },
   userName: {
@@ -31,8 +31,12 @@ export default makeStyles((theme) => ({
   },
   bioCont: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
     marginTop: "10px",
+  },
+  bioTitle: {
+    marginBottom: 0,
+    textDecoration: "underline",
   },
   btn: {
     background: "linear-gradient(45deg, #77D970 30%, #57CC99 90%)",

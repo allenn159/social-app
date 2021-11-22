@@ -57,7 +57,7 @@ userRoutes.post(
 // );
 userRoutes.put("/block-user/:id", authMiddleware, blockUserController);
 userRoutes.put("/unblock-user/:id", authMiddleware, unblockUserController);
-userRoutes.put("/:id", authMiddleware, updateProfileController);
+userRoutes.put("/update-bio", authMiddleware, updateProfileController);
 userRoutes.delete("/:id", deleteUserController);
 userRoutes.get("/:id", fetchUserDetailsController);
 

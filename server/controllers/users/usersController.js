@@ -145,7 +145,7 @@ const updateProfileController = expressAsyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(
     id,
     {
-      biography: req?.body?.bio,
+      biography: req?.body?.biography,
     },
     {
       // This will only update the information that is new

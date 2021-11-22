@@ -46,18 +46,16 @@ const Profile = () => {
           <p className={classes.userName}>{profile?.userName}</p>
         </div>
         <div className={classes.bioCont}>
+          <h2 className={classes.bioTitle}>Bio</h2>
           <p>
-            This defines the alignment along the main axis. It helps distribute
-            extra free space leftover when either all the flex items on a line
-            are inflexible, or are flexible but have reached their maximum size.
-            It also exerts some control over the alignment of items when they
-            overflow the line.{" "}
+            {profile?.biography}
             <Link to={"/update-bio"}>
               <EditIcon
                 style={{
                   fontSize: "20px",
                   textDecoration: "none",
                   color: "black",
+                  marginLeft: "10px",
                 }}
               />
             </Link>

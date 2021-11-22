@@ -1,6 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { baseUrl } from "../../../utils/baseUrl";
+
+// Action to redirect
+const resetPostAction = createAction("user/reset");
 
 // Register action
 
@@ -126,6 +129,39 @@ export const updateProfilePictureAction = createAsyncThunk(
   }
 );
 
+// Update bio action
+
+export const updateBioAction = createAsyncThunk(
+  "users/update-bio",
+  // reject with value allows for us to send customized error back to the user.
+  // getState gives us snapshot of what its on entire state. examples would be to use when user is logging in.
+  async (bio, { rejectWithValue, getState, dispatch }) => {
+    try {
+      // Retrieve user token
+      const user = getState()?.users;
+      const { userAuth } = user;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userAuth?.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `${baseUrl}/api/users/update-bio`,
+        bio,
+        config
+      );
+      dispatch(resetPostAction());
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Logout action
 export const logoutUserAction = createAsyncThunk(
   "user/logout",
@@ -187,6 +223,7 @@ const usersSlices = createSlice({
       // Error with the application
       state.appErr = action?.payload?.message;
     });
+
     // Profile
     builder.addCase(fetchProfileAction.pending, (state, action) => {
       state.loading = true;
@@ -202,6 +239,7 @@ const usersSlices = createSlice({
       // Error with the application
       state.appErr = action?.payload?.message;
     });
+
     // Upload Profile Picture
     builder.addCase(updateProfilePictureAction.pending, (state, action) => {
       state.loading = true;
@@ -217,6 +255,28 @@ const usersSlices = createSlice({
       // Error with the application
       state.appErr = action?.payload?.message;
     });
+
+    // Reset action
+    builder.addCase(resetPostAction, (state, action) => {
+      state.isSubmitted = true;
+    });
+    // Update Bio
+    builder.addCase(updateBioAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+    });
+    builder.addCase(updateBioAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.updatedBio = action.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+      state.isSubmitted = false;
+    });
+    builder.addCase(updateBioAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+    });
+
     //Logout
     builder.addCase(logoutUserAction.pending, (state, action) => {
       state.loading = true;
