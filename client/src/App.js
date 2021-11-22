@@ -10,6 +10,7 @@ import CreatePost from "./components/Posts/CreatePost";
 import ProtectedRoute from "./components/NavBar/ProtectedRoute/ProtectedRoute";
 import PostDetails from "./components/Posts/PostDetails";
 import Profile from "./components/Users/Profile/Profile";
+import UpdateBio from "./components/Users/Profile/UpdateBio";
 
 import "./App.css";
 
@@ -26,6 +27,7 @@ function App() {
         <ProtectedRoute exact path="/category/:id" component={Category} />
         <ProtectedRoute exact path="/create-post/:id" component={CreatePost} />
         <ProtectedRoute exact path="/posts/:id" component={PostDetails} />
+        <ProtectedRoute exact path="/update-bio" component={UpdateBio} />
       </Switch>
     </Router>
   );

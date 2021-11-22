@@ -145,10 +145,7 @@ const updateProfileController = expressAsyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(
     id,
     {
-      firstName: req?.body?.firstName,
-      lastName: req?.body?.lastName,
-      email: req?.body?.email,
-      bio: req?.body?.bio,
+      biography: req?.body?.bio,
     },
     {
       // This will only update the information that is new

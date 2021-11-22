@@ -7,6 +7,8 @@ import {
 } from "../../../Redux/slices/users/usersSlices";
 import { useParams } from "react-router-dom";
 import useStyles from "./styles";
+import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -50,11 +52,20 @@ const Profile = () => {
             are inflexible, or are flexible but have reached their maximum size.
             It also exerts some control over the alignment of items when they
             overflow the line.{" "}
+            <Link to={"/update-bio"}>
+              <EditIcon
+                style={{
+                  fontSize: "20px",
+                  textDecoration: "none",
+                  color: "black",
+                }}
+              />
+            </Link>
           </p>
         </div>
         <div>
-          <p>Followers: </p>
-          <p>Following: </p>
+          <p>Followers: {profile?.followers?.length} </p>
+          <p>Following: {profile?.following?.length} </p>
           <Button className={classes.btn} variant="contained">
             Follow
           </Button>
