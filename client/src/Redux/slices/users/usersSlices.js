@@ -162,6 +162,7 @@ export const updateBioAction = createAsyncThunk(
   }
 );
 
+// Follow user
 export const followUserAction = createAsyncThunk(
   "user/follow",
   async (userToFollowId, { rejectWithValue, getState, dispatch }) => {
@@ -180,6 +181,37 @@ export const followUserAction = createAsyncThunk(
       const { data } = await axios.put(
         `${baseUrl}/api/users/follow`,
         userToFollowId,
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+// Unfollow user
+export const unfollowUserAction = createAsyncThunk(
+  "user/unfollow",
+  async (userToUnfollowId, { rejectWithValue, getState, dispatch }) => {
+    // Retrieve user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    // Http call
+    // Need login token to submit request. You can get this from getState
+    try {
+      const { data } = await axios.put(
+        `${baseUrl}/api/users/unfollow`,
+        userToUnfollowId,
         config
       );
       return data;
@@ -318,6 +350,21 @@ const usersSlices = createSlice({
       state.appErr = undefined;
     });
     builder.addCase(followUserAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+    });
+
+    //Unfollow User
+    builder.addCase(unfollowUserAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+    });
+    builder.addCase(unfollowUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.followed = action.payload;
+      state.appErr = undefined;
+    });
+    builder.addCase(unfollowUserAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
     });

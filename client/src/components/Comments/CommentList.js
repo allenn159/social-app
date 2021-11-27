@@ -14,9 +14,14 @@ const CommentList = ({ comments }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  if (!comments) return <div>Loading...</div>;
+
+  const items = [...comments];
+  items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
     <>
-      {comments?.map((el) => (
+      {items?.map((el) => (
         <Paper className={classes.commentPaper} key={el._id}>
           <Link
             to={`/profile/${el.user._id}`}

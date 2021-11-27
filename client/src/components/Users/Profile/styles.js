@@ -39,6 +39,12 @@ export default makeStyles((theme) => ({
     textDecoration: "underline",
   },
   btn: {
+    background: "linear-gradient(45deg, #113CFC 30%, #1597E5 90%)",
+    boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
+    fontFamily: "Mukta",
+    color: "#fff",
+  },
+  followingBtn: {
     background: "linear-gradient(45deg, #77D970 30%, #57CC99 90%)",
     boxShadow: "0 1px 3px 1px rgba(255, 105, 135, 0.3)",
     fontFamily: "mukta",

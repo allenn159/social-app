@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProfileAction,
   updateProfilePictureAction,
+  followUserAction,
+  unfollowUserAction,
 } from "../../../Redux/slices/users/usersSlices";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useStyles from "./styles";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
+import CheckIcon from "@mui/icons-material/Check";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -24,11 +26,9 @@ const Profile = () => {
 
   const isUser = profile?._id === userAuth?._id;
 
-  console.log(isUser);
-
   useEffect(() => {
     dispatch(fetchProfileAction(id));
-  }, []);
+  }, [id, profile]);
 
   return (
     <Container className={classes.cont} maxWidth="lg">
@@ -68,8 +68,21 @@ const Profile = () => {
         <div>
           <p>Followers: {profile?.followers?.length} </p>
           <p>Following: {profile?.following?.length} </p>
-          {isUser ? null : (
-            <Button className={classes.btn} variant="contained">
+          {isUser ? null : profile?.followers?.includes(userAuth?._id) ? (
+            <Button
+              onClick={() => dispatch(unfollowUserAction({ unfollowId: id }))}
+              className={classes.followingBtn}
+              variant="contained"
+            >
+              Following{" "}
+              <CheckIcon style={{ margin: "0 0 4px 10px", height: "20px" }} />
+            </Button>
+          ) : (
+            <Button
+              onClick={() => dispatch(followUserAction({ followId: id }))}
+              className={classes.btn}
+              variant="contained"
+            >
               Follow
             </Button>
           )}

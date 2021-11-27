@@ -30,7 +30,7 @@ const Register = () => {
 
   //redirect to profile page after user has created account.
   if (registered) {
-    return <Redirect to="profile" />;
+    return <Redirect to="/login" />;
   }
 
   return (
