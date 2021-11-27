@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state?.users);
+  const { profile, userAuth } = useSelector((state) => state?.users);
   const { id } = useParams();
   const classes = useStyles();
   const inputFile = useRef(null);
@@ -22,7 +22,9 @@ const Profile = () => {
     dispatch(updateProfilePictureAction(image));
   };
 
-  console.log(profile);
+  const isUser = profile?._id === userAuth?._id;
+
+  console.log(isUser);
 
   useEffect(() => {
     dispatch(fetchProfileAction(id));
@@ -33,7 +35,7 @@ const Profile = () => {
       <Paper className={classes.paper}>
         <div className={classes.imgCont}>
           <img
-            onClick={() => inputFile.current.click()}
+            onClick={isUser ? () => inputFile.current.click() : null}
             className={classes.img}
             src={profile?.profilePicture}
           />
@@ -49,24 +51,28 @@ const Profile = () => {
           <h2 className={classes.bioTitle}>Bio</h2>
           <p>
             {profile?.biography}
-            <Link to={"/update-bio"}>
-              <EditIcon
-                style={{
-                  fontSize: "20px",
-                  textDecoration: "none",
-                  color: "black",
-                  marginLeft: "10px",
-                }}
-              />
-            </Link>
+            {isUser ? (
+              <Link to={"/update-bio"}>
+                <EditIcon
+                  style={{
+                    fontSize: "20px",
+                    textDecoration: "none",
+                    color: "black",
+                    marginLeft: "10px",
+                  }}
+                />
+              </Link>
+            ) : null}
           </p>
         </div>
         <div>
           <p>Followers: {profile?.followers?.length} </p>
           <p>Following: {profile?.following?.length} </p>
-          <Button className={classes.btn} variant="contained">
-            Follow
-          </Button>
+          {isUser ? null : (
+            <Button className={classes.btn} variant="contained">
+              Follow
+            </Button>
+          )}
         </div>
       </Paper>
     </Container>

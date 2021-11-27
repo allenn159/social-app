@@ -43,7 +43,7 @@ const UpdateBio = () => {
                 type="submit"
                 variant="contained"
               >
-                Submit Post
+                Update
               </Button>
             </form>
           </Grid>
