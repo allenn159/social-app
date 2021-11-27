@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Paper } from "@material-ui/core";
-import { useParams, Redirect } from "react-router";
+import { useParams, Redirect, Link } from "react-router-dom";
 import { fetchSinglePostAction } from "../../Redux/slices/posts/postSlices";
 import { useDispatch, useSelector } from "react-redux";
 import useStyles from "./styles";
@@ -45,14 +45,19 @@ const PostDetails = () => {
   return (
     <div className={classes.detailsCont}>
       <Paper className={classes.detailsPaper}>
-        <div className={classes.imgCont}>
-          <img
-            className={classes.img}
-            src={postDetails?.user?.profilePicture}
-            alt="profile picture"
-          />
-          <p>{postDetails?.user?.userName}</p>
-        </div>
+        <Link
+          to={`/profile/${postDetails?.user?._id}`}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <div className={classes.imgCont}>
+            <img
+              className={classes.img}
+              src={postDetails?.user?.profilePicture}
+              alt="profile picture"
+            />
+            <p>{postDetails?.user?.userName}</p>
+          </div>
+        </Link>
         <div className={classes.titleCont}>
           <h2 className={classes.postTitle}>{postDetails?.title}</h2>
           <div className={classes.detailsBody}>{postDetails?.description}</div>

@@ -162,6 +162,36 @@ export const updateBioAction = createAsyncThunk(
   }
 );
 
+export const followUserAction = createAsyncThunk(
+  "user/follow",
+  async (userToFollowId, { rejectWithValue, getState, dispatch }) => {
+    // Retrieve user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    // Http call
+    // Need login token to submit request. You can get this from getState
+    try {
+      const { data } = await axios.put(
+        `${baseUrl}/api/users/follow`,
+        userToFollowId,
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Logout action
 export const logoutUserAction = createAsyncThunk(
   "user/logout",
@@ -273,6 +303,21 @@ const usersSlices = createSlice({
       state.isSubmitted = false;
     });
     builder.addCase(updateBioAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+    });
+
+    //Follow User
+    builder.addCase(followUserAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+    });
+    builder.addCase(followUserAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.followed = action.payload;
+      state.appErr = undefined;
+    });
+    builder.addCase(followUserAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
     });

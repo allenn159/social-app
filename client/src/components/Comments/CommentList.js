@@ -5,6 +5,7 @@ import Moment from "react-moment";
 import { deleteCommentAction } from "../../Redux/slices/comments/commentSlices";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const CommentList = ({ comments }) => {
   const user = useSelector((state) => state.users);
@@ -17,10 +18,15 @@ const CommentList = ({ comments }) => {
     <>
       {comments?.map((el) => (
         <Paper className={classes.commentPaper} key={el._id}>
-          <div className={classes.imgCont}>
-            <img className={classes.img} src={el.user.profilePicture} />
-            <p>{el.user.firstName}</p>
-          </div>
+          <Link
+            to={`/profile/${el.user._id}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div className={classes.imgCont}>
+              <img className={classes.img} src={el.user.profilePicture} />
+              <p>{el.user.userName}</p>
+            </div>
+          </Link>
           <p>{el.description}</p>
           {isLoginUser === el.user._id ? (
             <DeleteIcon
