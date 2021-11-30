@@ -34,13 +34,8 @@ const PostDetails = () => {
 
   const isCreatedBy = postDetails?.user?._id === userAuth?._id;
 
-  if (post?.isLoading)
-    return <div style={{ marginTop: "200px" }}>Loading...</div>;
-
   if (post?.isDeleted)
     return <Redirect to={`/category/${postDetails?.category}`} />;
-
-  console.log(postDetails);
 
   return (
     <div className={classes.detailsCont}>

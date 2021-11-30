@@ -222,7 +222,7 @@ const postSlice = createSlice({
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;
     });
-    // Toggle likes on post
+    // Toggle dislikes on post
     builder.addCase(toggleDislikesAction.pending, (state, action) => {
       state.loading = true;
       state.appErr = undefined;
