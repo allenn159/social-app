@@ -104,4 +104,11 @@ export default makeStyles((theme) => ({
     background: "linear-gradient(45deg, #113CFC 30%, #1597E5 90%)",
     boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
   },
+  // Error
+  err: {
+    marginTop: "15vh",
+    fontFamily: "Mukta",
+    fontSize: "30px",
+    textAlign: "center",
+  },
 }));

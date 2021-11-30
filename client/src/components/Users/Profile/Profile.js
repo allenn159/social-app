@@ -14,7 +14,8 @@ import CheckIcon from "@mui/icons-material/Check";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { profile, userAuth } = useSelector((state) => state?.users);
+  const { profile, userAuth, appErr } = useSelector((state) => state?.users);
+  const state = useSelector((state) => state);
   const { id } = useParams();
   const classes = useStyles();
   const inputFile = useRef(null);
@@ -29,6 +30,18 @@ const Profile = () => {
   useEffect(() => {
     dispatch(fetchProfileAction(id));
   }, [id, profile]);
+
+  if (appErr)
+    return (
+      <Container className={classes.cont} maxWidth="lg">
+        <Paper
+          className={classes.paper}
+          style={{ textAlign: "center", fontSize: "30px" }}
+        >
+          User does not exist!
+        </Paper>
+      </Container>
+    );
 
   return (
     <Container className={classes.cont} maxWidth="lg">

@@ -1,5 +1,6 @@
 const Category = require("../../model/category/Category");
 const expressAsyncHandler = require("express-async-handler");
+const validateMongodbID = require("../../utils/validateMongodbID");
 
 //--------------------------------
 // Create category
@@ -38,6 +39,7 @@ const fetchCategoriesCtrl = expressAsyncHandler(async (req, res) => {
 
 const fetchCategoryCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongodbID(id);
   try {
     const category = await Category.findById(id)
       .populate("user")

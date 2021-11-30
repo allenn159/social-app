@@ -13,16 +13,23 @@ const Category = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { categories } = state;
-  const category = categories?.category;
+  const { category, appErr } = categories;
   const { postList, likes, disLikes } = state?.post;
 
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
-  }, [id, dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(fetchPostsAction(id));
   }, [likes, disLikes, dispatch, id]);
+
+  if (appErr)
+    return (
+      <Container maxWidth="lg">
+        <p className={classes.err}>Category does not exist!</p>
+      </Container>
+    );
 
   return (
     <Container maxWidth="lg">
