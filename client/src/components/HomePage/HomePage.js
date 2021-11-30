@@ -1,11 +1,15 @@
 import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import useStyles from "./styles";
 import img from "../../img/people.jpg";
 
 const HomePage = () => {
   const classes = useStyles();
+  const { userAuth } = useSelector((state) => state?.users);
+
+  console.log(userAuth);
   return (
     <div>
       <Grid className={classes.gridContainer} container>
@@ -17,24 +21,26 @@ const HomePage = () => {
             <h1 className={classes.text2} variant="h2">
               uBlog
             </h1>
-            <div className={classes.buttonContainer}>
-              <Button
-                component={Link}
-                to="/register"
-                variant="contained"
-                className={classes.signUpBtn}
-              >
-                Sign Up
-              </Button>
-              <Button
-                component={Link}
-                to="/login"
-                variant="contained"
-                className={classes.loginBtn}
-              >
-                Login
-              </Button>
-            </div>
+            {userAuth ? null : (
+              <div className={classes.buttonContainer}>
+                <Button
+                  component={Link}
+                  to="/register"
+                  variant="contained"
+                  className={classes.signUpBtn}
+                >
+                  Sign Up
+                </Button>
+                <Button
+                  component={Link}
+                  to="/login"
+                  variant="contained"
+                  className={classes.loginBtn}
+                >
+                  Login
+                </Button>
+              </div>
+            )}
           </div>
         </Grid>
         <Grid className={classes.gridItemTwo} item xs={12} md={6}>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../Redux/slices/users/usersSlices";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Container, Paper, TextField, Button } from "@material-ui/core";
 import useStyles from "./styles";
 
@@ -22,9 +22,9 @@ const Login = () => {
 
   //redirect after login
   const storeData = useSelector((state) => state?.users);
-  const { appErr } = storeData;
+  const { appErr, userAuth } = storeData;
 
-  // if (userAuth) return <Redirect to="profile" />;
+  if (userAuth) return <Redirect to={`/profile/${userAuth?._id}`} />;
 
   return (
     <Container className={classes.container}>
