@@ -88,17 +88,17 @@ const fetchUsersController = expressAsyncHandler(async (req, res) => {
 // Delete user
 //--------------------------------
 
-const deleteUserController = expressAsyncHandler(async (req, res) => {
-  const { id } = req.params;
-  // check if user id is valid
-  validateMongodbID(id);
-  try {
-    const deletedUser = await User.findByIdAndDelete(id);
-    res.json(deletedUser);
-  } catch (error) {
-    res.send(error);
-  }
-});
+// const deleteUserController = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   // check if user id is valid
+//   validateMongodbID(id);
+//   try {
+//     const deletedUser = await User.findByIdAndDelete(id);
+//     res.json(deletedUser);
+//   } catch (error) {
+//     res.send(error);
+//   }
+// });
 
 //--------------------------------
 // Fetch user details
@@ -260,72 +260,72 @@ const unfollowUserController = expressAsyncHandler(async (req, res) => {
 // Block user (as admin)
 //--------------------------------
 
-const blockUserController = expressAsyncHandler(async (req, res) => {
-  const { id } = req.params;
-  validateMongodbID(id);
+// const blockUserController = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   validateMongodbID(id);
 
-  const user = await User.findByIdAndUpdate(
-    id,
-    {
-      isBlocked: true,
-    },
-    { new: true }
-  );
-  res.json(user);
-});
+//   const user = await User.findByIdAndUpdate(
+//     id,
+//     {
+//       isBlocked: true,
+//     },
+//     { new: true }
+//   );
+//   res.json(user);
+// });
 
 //--------------------------------
 // Unblock user (as admin)
 //--------------------------------
 
-const unblockUserController = expressAsyncHandler(async (req, res) => {
-  const { id } = req.params;
-  validateMongodbID(id);
+// const unblockUserController = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   validateMongodbID(id);
 
-  const user = await User.findByIdAndUpdate(
-    id,
-    {
-      isBlocked: false,
-    },
-    { new: true }
-  );
-  res.json(user);
-});
+//   const user = await User.findByIdAndUpdate(
+//     id,
+//     {
+//       isBlocked: false,
+//     },
+//     { new: true }
+//   );
+//   res.json(user);
+// });
 
 //--------------------------------
 // Generate account verification token (by email)
 //--------------------------------
 
-const generateVerificationTokenController = expressAsyncHandler(
-  async (req, res) => {
-    const loginUser = req.user.id;
+// const generateVerificationTokenController = expressAsyncHandler(
+//   async (req, res) => {
+//     const loginUser = req.user.id;
 
-    const user = await User.findById(loginUser);
+//     const user = await User.findById(loginUser);
 
-    try {
-      // Generate Token
-      const verificationToken = await user.createVerfificationToken();
-      // Save user
-      await user.save();
-      console.log(verificationToken);
-      // Build message
+//     try {
+//       // Generate Token
+//       const verificationToken = await user.createVerfificationToken();
+//       // Save user
+//       await user.save();
+//       console.log(verificationToken);
+//       // Build message
 
-      const verifyLink = `Please verify your email within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/verify-account/${verificationToken}">Click here to verify your account.</a>`;
+//       const verifyLink = `Please verify your email within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/verify-account/${verificationToken}">Click here to verify your account.</a>`;
 
-      const msg = {
-        to: "allenabbottdev@gmail.com",
-        from: "donotreplycrudapp@gmail.com",
-        subject: "My first NodeJS email",
-        html: verifyLink,
-      };
+//       const msg = {
+//         to: "allenabbottdev@gmail.com",
+//         from: "donotreplycrudapp@gmail.com",
+//         subject: "My first NodeJS email",
+//         html: verifyLink,
+//       };
 
-      await sendGridMail.send(msg);
-      res.json(verifyLink);
-    } catch (error) {
-      res.json(error);
-    }
-  }
-);
+//       await sendGridMail.send(msg);
+//       res.json(verifyLink);
+//     } catch (error) {
+//       res.json(error);
+//     }
+//   }
+// );
 
 //--------------------------------
 // Account verification
@@ -358,64 +358,64 @@ const generateVerificationTokenController = expressAsyncHandler(
 // Generate forget password token
 //--------------------------------
 
-const generateForgetPasswordTokenController = expressAsyncHandler(
-  async (req, res) => {
-    // Locate user by email.
-    const { email } = req.body;
+// const generateForgetPasswordTokenController = expressAsyncHandler(
+//   async (req, res) => {
+//     // Locate user by email.
+//     const { email } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user) throw new Error("User not found");
+//     const user = await User.findOne({ email });
+//     if (!user) throw new Error("User not found");
 
-    try {
-      const token = await user.createPasswordResetToken();
-      console.log(token);
-      await user.save();
+//     try {
+//       const token = await user.createPasswordResetToken();
+//       console.log(token);
+//       await user.save();
 
-      // Build message
+//       // Build message
 
-      const resetLink = `Please reset your password within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`;
+//       const resetLink = `Please reset your password within the next 10 minutes, otherwise this link will expire. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`;
 
-      const msg = {
-        to: email,
-        from: "donotreplycrudapp@gmail.com",
-        subject: "Reset Password",
-        html: resetLink,
-      };
+//       const msg = {
+//         to: email,
+//         from: "donotreplycrudapp@gmail.com",
+//         subject: "Reset Password",
+//         html: resetLink,
+//       };
 
-      const emailMsg = await sendGridMail.send(msg);
-      // In production never send json response with email message.
-      res.json({
-        msg: `A message was succesfully sent to ${user.email}. Please reset the password within the next 10 minutes. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`,
-      });
-    } catch (error) {
-      res.json(error);
-    }
-  }
-);
+//       const emailMsg = await sendGridMail.send(msg);
+//       // In production never send json response with email message.
+//       res.json({
+//         msg: `A message was succesfully sent to ${user.email}. Please reset the password within the next 10 minutes. <a href="http://localhost:3000/reset-password/${token}">Click here to reset your password.</a>`,
+//       });
+//     } catch (error) {
+//       res.json(error);
+//     }
+//   }
+// );
 
 //--------------------------------
 // Password reset controller
 //--------------------------------
 
-const passwordResetController = expressAsyncHandler(async (req, res) => {
-  const { token, password } = req.body;
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+// const passwordResetController = expressAsyncHandler(async (req, res) => {
+//   const { token, password } = req.body;
+//   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
-  //Find user by the token
-  const user = await User.findOne({
-    passwordResetToken: hashedToken,
-    passwordResetExpires: { $gt: new Date() },
-  });
+//   //Find user by the token
+//   const user = await User.findOne({
+//     passwordResetToken: hashedToken,
+//     passwordResetExpires: { $gt: new Date() },
+//   });
 
-  if (!user) throw new Error("Token expired");
+//   if (!user) throw new Error("Token expired");
 
-  // Change password
-  user.password = password;
-  user.passwordResetToken = undefined;
-  user.passwordResetExpires = undefined;
-  await user.save();
-  res.json(user);
-});
+//   // Change password
+//   user.password = password;
+//   user.passwordResetToken = undefined;
+//   user.passwordResetExpires = undefined;
+//   await user.save();
+//   res.json(user);
+// });
 
 //--------------------------------
 // Profile picture upload
@@ -446,17 +446,11 @@ module.exports = {
   userRegController,
   loginUserController,
   fetchUsersController,
-  deleteUserController,
   fetchUserDetailsController,
   userProfileController,
   updateProfileController,
   updateUserPasswordController,
   followUserController,
   unfollowUserController,
-  blockUserController,
-  unblockUserController,
-  generateVerificationTokenController,
-  generateForgetPasswordTokenController,
-  passwordResetController,
   profilePictureUploadController,
 };
