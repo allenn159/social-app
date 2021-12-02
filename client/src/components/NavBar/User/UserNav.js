@@ -23,7 +23,9 @@ const UserNav = () => {
           <Hamburger toggled={openDrawer} toggle={onHandleDrawer} />
         </div>
         <div className={classes.contentCont}>
-          <h3 className={classes.title}>uBlog</h3>
+          <Link style={{ textDecoration: "none" }} to="/">
+            <h3 className={classes.title}>uBlog</h3>
+          </Link>
           <div className={classes.buttonCont}>
             <Button
               component={Link}

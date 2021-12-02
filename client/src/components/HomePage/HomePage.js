@@ -9,7 +9,6 @@ const HomePage = () => {
   const classes = useStyles();
   const { userAuth } = useSelector((state) => state?.users);
 
-  console.log(userAuth);
   return (
     <div>
       <Grid className={classes.gridContainer} container>

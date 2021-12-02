@@ -15,7 +15,6 @@ import CheckIcon from "@mui/icons-material/Check";
 const Profile = () => {
   const dispatch = useDispatch();
   const { profile, userAuth, appErr } = useSelector((state) => state?.users);
-  const state = useSelector((state) => state);
   const { id } = useParams();
   const classes = useStyles();
   const inputFile = useRef(null);

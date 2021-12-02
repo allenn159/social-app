@@ -29,6 +29,9 @@ export default makeStyles((theme) => ({
     fontWeight: 700,
     fontSize: "30px",
     marginLeft: "10px",
+    marginTop: "25px",
+    color: "#fff",
+    textDecoration: "none",
   },
   buttonCont: {
     marginLeft: "20px",
