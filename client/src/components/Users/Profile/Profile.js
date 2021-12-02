@@ -6,6 +6,7 @@ import {
   updateProfilePictureAction,
   followUserAction,
   unfollowUserAction,
+  resetProfileAction,
 } from "../../../Redux/slices/users/usersSlices";
 import { useParams, Link } from "react-router-dom";
 import useStyles from "./styles";
@@ -14,7 +15,9 @@ import CheckIcon from "@mui/icons-material/Check";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { profile, userAuth, appErr } = useSelector((state) => state?.users);
+  const { profile, userAuth, appErr, following } = useSelector(
+    (state) => state?.users
+  );
   const { id } = useParams();
   const classes = useStyles();
   const inputFile = useRef(null);
@@ -28,7 +31,15 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(fetchProfileAction(id));
-  }, [id, profile]);
+  }, [id, following]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetProfileAction());
+    };
+  }, []);
+
+  if (!profile) return null;
 
   if (appErr)
     return (

@@ -4,6 +4,7 @@ import { baseUrl } from "../../../utils/baseUrl";
 
 // Action to redirect
 const resetPostAction = createAction("user/reset");
+export const resetProfileAction = createAction("user/profileReset");
 
 // Register action
 
@@ -250,6 +251,7 @@ const usersSlices = createSlice({
   initialState: {
     userAuth: userLoginFromStorage,
   },
+
   // This is the object notation. Other notation is map. Object notation is what is recommended.
   // Pending, fulfilled, and rejected are the options
   extraReducers: (builder) => {
@@ -286,6 +288,10 @@ const usersSlices = createSlice({
       state.appErr = action?.payload?.message;
     });
 
+    //Reset profile on unmount
+    builder.addCase(resetProfileAction, (state, action) => {
+      state.profile = null;
+    });
     // Profile
     builder.addCase(fetchProfileAction.pending, (state, action) => {
       state.loading = true;
@@ -348,6 +354,7 @@ const usersSlices = createSlice({
       state.loading = false;
       state.followed = action.payload;
       state.appErr = undefined;
+      state.following = true;
     });
     builder.addCase(followUserAction.rejected, (state, action) => {
       state.loading = false;
@@ -363,6 +370,7 @@ const usersSlices = createSlice({
       state.loading = false;
       state.followed = action.payload;
       state.appErr = undefined;
+      state.following = false;
     });
     builder.addCase(unfollowUserAction.rejected, (state, action) => {
       state.loading = false;
