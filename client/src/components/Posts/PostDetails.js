@@ -11,6 +11,7 @@ import {
   toggleLikesAction,
   toggleDislikesAction,
   deletePostAction,
+  reset,
 } from "../../Redux/slices/posts/postSlices";
 import CreateComment from "../Comments/CreateComment";
 import CommentList from "../Comments/CommentList";
@@ -27,12 +28,20 @@ const PostDetails = () => {
     dispatch(fetchSinglePostAction(id));
   }, [id, dispatch, likes, disLikes, comments]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(reset());
+    };
+  }, []);
+
   // Check to see if logged in user matches the creator of the post.
   // Only the original author can delete the post.
   const user = useSelector((state) => state?.users);
   const { userAuth } = user;
 
   const isCreatedBy = postDetails?.user?._id === userAuth?._id;
+
+  if (!postDetails) return null;
 
   if (post?.isDeleted)
     return <Redirect to={`/category/${postDetails?.category}`} />;

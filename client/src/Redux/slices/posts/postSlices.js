@@ -143,11 +143,18 @@ export const deletePostAction = createAsyncThunk(
   }
 );
 
+const initialState = {
+  returned: [],
+};
+
 // Slice
 
 const postSlice = createSlice({
   name: "post",
   initialState: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers: (builder) => {
     // Create post
     builder.addCase(createPostAction.pending, (state, action) => {
@@ -262,5 +269,7 @@ const postSlice = createSlice({
     });
   },
 });
+
+export const { reset } = postSlice.actions;
 
 export default postSlice.reducer;
