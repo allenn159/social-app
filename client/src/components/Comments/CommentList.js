@@ -28,11 +28,15 @@ const CommentList = ({ comments }) => {
             style={{ textDecoration: "none", color: "black" }}
           >
             <div className={classes.imgCont}>
-              <img className={classes.img} src={el.user.profilePicture} />
+              <img
+                className={classes.img}
+                src={el.user.profilePicture}
+                alt="profile"
+              />
               <p>{el.user.userName}</p>
             </div>
           </Link>
-          <p>{el.description}</p>
+          <p style={{ whiteSpace: "pre-line" }}>{el.description}</p>
           {isLoginUser === el.user._id ? (
             <DeleteIcon
               className={classes.deleteIcon}

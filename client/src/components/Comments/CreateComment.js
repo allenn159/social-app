@@ -13,7 +13,7 @@ const CreateComment = ({ postId }) => {
   });
 
   useEffect(() => {
-    setComment({ ...comment, postId: postId });
+    setComment((prev) => ({ ...prev, postId: postId }));
   }, [postId]);
 
   const onSubmit = (e) => {

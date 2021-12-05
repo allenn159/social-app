@@ -18,7 +18,7 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(fetchCategoryAction(id));
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
     dispatch(fetchPostsAction(id));
