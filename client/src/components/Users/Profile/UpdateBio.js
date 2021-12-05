@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Paper, Grid, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
@@ -7,7 +7,6 @@ import { updateBioAction } from "../../../Redux/slices/users/usersSlices";
 
 const UpdateBio = () => {
   const classes = useStyles();
-  const { id } = useParams();
   const dispatch = useDispatch();
   const { isSubmitted, userAuth } = useSelector((state) => state?.users);
   const [post, setPost] = useState({

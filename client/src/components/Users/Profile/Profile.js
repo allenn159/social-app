@@ -61,6 +61,7 @@ const Profile = () => {
             onClick={isUser ? () => inputFile.current.click() : null}
             className={classes.img}
             src={profile?.profilePicture}
+            alt="profile"
           />
           <input
             onChange={(event) => uploadImage(event.target.files)}

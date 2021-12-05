@@ -69,9 +69,11 @@ const PostDetails = () => {
             <img
               className={classes.img}
               src={postDetails?.user?.profilePicture}
-              alt="profile picture"
+              alt="profile"
             />
-            <p>{postDetails?.user?.userName}</p>
+            <p className={classes.detailsUserName}>
+              {postDetails?.user?.userName}
+            </p>
           </div>
         </Link>
         <div className={classes.titleCont}>

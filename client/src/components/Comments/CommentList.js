@@ -33,7 +33,7 @@ const CommentList = ({ comments }) => {
                 src={el.user.profilePicture}
                 alt="profile"
               />
-              <p>{el.user.userName}</p>
+              <p className={classes.userName}>{el.user.userName}</p>
             </div>
           </Link>
           <p style={{ whiteSpace: "pre-line" }}>{el.description}</p>

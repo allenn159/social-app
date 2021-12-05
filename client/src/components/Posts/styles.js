@@ -109,6 +109,11 @@ export default makeStyles((theme) => ({
       width: "90%",
     },
   },
+  detailsUserName: {
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
   detailsBody: {
     margin: "20px 0",
     fontSize: "20px",

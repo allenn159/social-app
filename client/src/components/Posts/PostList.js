@@ -32,7 +32,7 @@ const PostList = ({ postList }) => {
             <img
               className={classes.img}
               src={el.user.profilePicture}
-              alt="profile picture"
+              alt="profile"
             />
             <p>{el.user.userName}</p>
           </div>

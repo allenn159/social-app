@@ -28,7 +28,7 @@ const CreatePost = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    setPost({ ...post, category: category?._id });
+    setPost((prev) => ({ ...prev, category: category?._id }));
   }, [category]);
 
   if (postCreated) return <Redirect to={`/posts/${postCreated._id}`} />;

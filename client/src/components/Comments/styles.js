@@ -46,6 +46,11 @@ export default makeStyles((theme) => ({
     borderRadius: "50%",
     marginRight: "10px",
   },
+  userName: {
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
   timeStampCont: {
     display: "flex",
     alignItems: "center",
