@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Paper, Grid, TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import useStyles from "./styles";
 import { updateBioAction } from "../../../Redux/slices/users/usersSlices";
 
