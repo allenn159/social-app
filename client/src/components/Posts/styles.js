@@ -79,6 +79,7 @@ export default makeStyles((theme) => ({
     margin: "20px 0",
     maxHeight: "200px",
     fontSize: "20px",
+    whiteSpace: "pre-line",
     overflowY: "hidden",
     [theme.breakpoints.down("sm")]: {
       maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
@@ -111,6 +112,7 @@ export default makeStyles((theme) => ({
   detailsBody: {
     margin: "20px 0",
     fontSize: "20px",
+    whiteSpace: "pre-line",
   },
   // Create Post
   formPaper: {

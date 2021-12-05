@@ -10,8 +10,8 @@ const CreatePost = () => {
   const classes = useStyles();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { isSubmitted } = useSelector((state) => state.post);
-  const { category } = useSelector((state) => state.categories);
+  const { postCreated } = useSelector((state) => state?.post);
+  const { category } = useSelector((state) => state?.categories);
   const [post, setPost] = useState({
     title: "",
     description: "",
@@ -31,7 +31,7 @@ const CreatePost = () => {
     setPost({ ...post, category: category?._id });
   }, [category]);
 
-  if (isSubmitted) return <Redirect to={`/category/${id}`} />;
+  if (postCreated) return <Redirect to={`/posts/${postCreated._id}`} />;
 
   return (
     <Container maxWidth="md">
