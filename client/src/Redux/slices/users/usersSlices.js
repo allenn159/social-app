@@ -311,17 +311,17 @@ const usersSlices = createSlice({
     // Upload Profile Picture
     builder.addCase(updateProfilePictureAction.pending, (state, action) => {
       state.loading = true;
-      state.appErr = undefined;
+      state.imageErr = undefined;
     });
     builder.addCase(updateProfilePictureAction.fulfilled, (state, action) => {
       state.profile = action?.payload;
       state.loading = false;
-      state.appErr = undefined;
+      state.imageErr = undefined;
     });
     builder.addCase(updateProfilePictureAction.rejected, (state, action) => {
       state.loading = false;
       // Error with the application
-      state.appErr = action?.payload?.message;
+      state.imageErr = action?.payload?.message;
     });
 
     // Reset action

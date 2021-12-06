@@ -28,7 +28,7 @@ const multerFilter = (req, file, callback) => {
     !file.mimetype.includes("image/png") &&
     !file.mimetype.includes("image/jpeg")
   ) {
-    return callback(null, false);
+    return callback(new Error("File type is not supported"), false);
   }
   callback(null, true);
 };
