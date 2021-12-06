@@ -41,7 +41,19 @@ const PostDetails = () => {
 
   const isCreatedBy = postDetails?.user?._id === userAuth?._id;
 
-  if (!postDetails) return null;
+  if (!postDetails)
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "100px",
+          fontFamily: "Mukta",
+          fontSize: "50px",
+        }}
+      >
+        Loading...
+      </p>
+    );
 
   if (post?.isDeleted)
     return <Redirect to={`/category/${postDetails?.category}`} />;

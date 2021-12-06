@@ -34,7 +34,16 @@ const Category = () => {
   return (
     <Container maxWidth="lg">
       {categories.loading ? (
-        <h1 className={classes.loadingTitle}>Loading...</h1>
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "100px",
+            fontFamily: "Mukta",
+            fontSize: "50px",
+          }}
+        >
+          Loading...
+        </p>
       ) : (
         <Grid className={classes.categoryCont} container>
           <Grid className={classes.categoryGrid} item xs={12}>

@@ -14,7 +14,19 @@ const PostList = ({ postList }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  if (!postList) return <div>Loading...</div>;
+  if (!postList)
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "100px",
+          fontFamily: "Mukta",
+          fontSize: "50px",
+        }}
+      >
+        Loading...
+      </p>
+    );
 
   const items = [...postList];
   items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));

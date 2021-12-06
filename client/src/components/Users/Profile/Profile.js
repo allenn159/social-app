@@ -15,7 +15,7 @@ import CheckIcon from "@mui/icons-material/Check";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { profile, userAuth, appErr, following } = useSelector(
+  const { profile, userAuth, appErr, imageErr, following } = useSelector(
     (state) => state?.users
   );
   const { id } = useParams();
@@ -39,7 +39,19 @@ const Profile = () => {
     };
   }, []);
 
-  if (!profile) return null;
+  if (!profile)
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "100px",
+          fontFamily: "Mukta",
+          fontSize: "50px",
+        }}
+      >
+        Loading...
+      </p>
+    );
 
   if (appErr)
     return (
@@ -71,6 +83,7 @@ const Profile = () => {
           />
           <p className={classes.userName}>{profile?.userName}</p>
         </div>
+        {imageErr && <p>{imageErr}</p>}
         <div className={classes.bioCont}>
           <h2 className={classes.bioTitle}>Bio</h2>
           <p>
