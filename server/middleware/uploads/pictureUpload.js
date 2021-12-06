@@ -12,18 +12,25 @@ const multerStorage = multer.memoryStorage();
 const multerFilter = (req, file, callback) => {
   // Check file type
   // image is declared in the form-data
-  if (file.mimetype.startsWith("image")) {
-    // First argument as null means it was successful and true means to proceed with uploading the actual file.
-    callback(null, true);
-  } else {
-    // Rejected files
-    callback(
-      {
-        message: "Unsupported file type",
-      },
-      false
-    );
+  // if (file.mimetype.startsWith("image")) {
+  //   // First argument as null means it was successful and true means to proceed with uploading the actual file.
+  //   callback(null, true);
+  // } else {
+  //   // Rejected files
+  //   callback(
+  //     {
+  //       message: "Unsupported file type",
+  //     },
+  //     false
+  //   );
+  // }
+  if (
+    !file.mimetype.includes("image/png") &&
+    !file.mimetype.includes("image/jpeg")
+  ) {
+    return callback(null, false);
   }
+  callback(null, true);
 };
 
 const pictureUpload = multer({
