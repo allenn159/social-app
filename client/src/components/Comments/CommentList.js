@@ -5,6 +5,7 @@ import Moment from "react-moment";
 import {
   fetchCommentsAction,
   deleteCommentAction,
+  reset,
 } from "../../Redux/slices/comments/commentSlices";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,19 +23,11 @@ const CommentList = ({ postId }) => {
     dispatch(fetchCommentsAction(postId));
   }, [comments]);
 
-  if (!fetchedComments)
-    return (
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: "100px",
-          fontFamily: "Mukta",
-          fontSize: "30px",
-        }}
-      >
-        Loading...
-      </p>
-    );
+  useEffect(() => {
+    return () => {
+      dispatch(reset());
+    };
+  }, []);
 
   return (
     <>

@@ -103,6 +103,9 @@ const initialState = {
 const commentSlices = createSlice({
   name: "comments",
   initialState: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers: (builder) => {
     //Create comment
     builder.addCase(createCommentAction.pending, (state, action) => {
