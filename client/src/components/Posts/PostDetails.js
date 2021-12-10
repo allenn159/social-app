@@ -22,11 +22,10 @@ const PostDetails = () => {
   const { id } = useParams();
   const { postDetails, likes, disLikes } = useSelector((state) => state?.post);
   const { post } = useSelector((state) => state);
-  const { comments } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchSinglePostAction(id));
-  }, [id, dispatch, likes, disLikes, comments]);
+  }, [id, dispatch, likes, disLikes]);
 
   useEffect(() => {
     return () => {
@@ -136,7 +135,7 @@ const PostDetails = () => {
         </div>
       </Paper>
       <CreateComment postId={postDetails?._id} />
-      <CommentList comments={postDetails?.comments} postId={id} />
+      <CommentList postId={id} />
     </div>
   );
 };

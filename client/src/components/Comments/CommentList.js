@@ -10,9 +10,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const CommentList = ({ comments, postId }) => {
+const CommentList = ({ postId }) => {
   const user = useSelector((state) => state.users);
-  const { fetchedComments } = useSelector((state) => state?.comments);
+  const { fetchedComments, comments } = useSelector((state) => state?.comments);
   const { userAuth } = user;
   const isLoginUser = userAuth?._id;
   const dispatch = useDispatch();
@@ -20,9 +20,21 @@ const CommentList = ({ comments, postId }) => {
 
   useEffect(() => {
     dispatch(fetchCommentsAction(postId));
-  }, []);
+  }, [comments]);
 
-  if (!fetchedComments) return <div>Loading...</div>;
+  if (!fetchedComments)
+    return (
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "100px",
+          fontFamily: "Mukta",
+          fontSize: "30px",
+        }}
+      >
+        Loading...
+      </p>
+    );
 
   return (
     <>

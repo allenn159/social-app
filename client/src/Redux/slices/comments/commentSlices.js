@@ -96,6 +96,10 @@ export const deleteCommentAction = createAsyncThunk(
   }
 );
 
+const initialState = {
+  returned: [],
+};
+
 const commentSlices = createSlice({
   name: "comments",
   initialState: {},
@@ -150,5 +154,7 @@ const commentSlices = createSlice({
     });
   },
 });
+
+export const { reset } = commentSlices.actions;
 
 export default commentSlices.reducer;
