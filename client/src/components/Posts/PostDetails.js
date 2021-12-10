@@ -136,7 +136,7 @@ const PostDetails = () => {
         </div>
       </Paper>
       <CreateComment postId={postDetails?._id} />
-      <CommentList comments={postDetails?.comments} />
+      <CommentList comments={postDetails?.comments} postId={id} />
     </div>
   );
 };

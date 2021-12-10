@@ -37,6 +37,34 @@ export const createCommentAction = createAsyncThunk(
   }
 );
 
+// Fetch comments
+export const fetchCommentsAction = createAsyncThunk(
+  "comment/fetch",
+  async (postId, { rejectWithValue, getState, dispatch }) => {
+    const user = getState()?.users;
+    const { userAuth } = user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.get(
+        `${baseUrl}/api/comments/${postId}`,
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // Delete comment action
 
 export const deleteCommentAction = createAsyncThunk(
@@ -88,6 +116,23 @@ const commentSlices = createSlice({
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;
     });
+
+    // Fetch comments
+    builder.addCase(fetchCommentsAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchCommentsAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.fetchedComments = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(fetchCommentsAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.error?.message;
+    });
+
     //Delete comment
     builder.addCase(deleteCommentAction.pending, (state, action) => {
       state.loading = true;

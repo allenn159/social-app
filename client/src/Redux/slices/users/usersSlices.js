@@ -310,16 +310,16 @@ const usersSlices = createSlice({
 
     // Upload Profile Picture
     builder.addCase(updateProfilePictureAction.pending, (state, action) => {
-      state.loading = true;
+      state.imageLoading = true;
       state.imageErr = undefined;
     });
     builder.addCase(updateProfilePictureAction.fulfilled, (state, action) => {
       state.profile = action?.payload;
-      state.loading = false;
+      state.imageLoading = false;
       state.imageErr = undefined;
     });
     builder.addCase(updateProfilePictureAction.rejected, (state, action) => {
-      state.loading = false;
+      state.imageLoading = false;
       // Error with the application
       state.imageErr = action?.payload?.message;
     });

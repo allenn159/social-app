@@ -31,7 +31,9 @@ const createCommentCtrl = expressAsyncHandler(async (req, res) => {
 const fetchCommentsCtrl = expressAsyncHandler(async (req, res) => {
   try {
     // Find all comments and sort from newest to oldest.
-    const comments = await Comment.find({}).sort("-created");
+    const { id } = req?.params;
+
+    const comments = await Comment.find({ post: id }).sort("-createdAt");
     res.json(comments);
   } catch (error) {
     res.json(error);

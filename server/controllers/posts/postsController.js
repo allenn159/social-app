@@ -45,10 +45,11 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
 
 const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req?.params;
-  const category = await Category.findById(id);
   try {
     // The populate method attaches the user information to the specific post.
-    const posts = await Post.find({ category: category?._id }).populate("user");
+    const posts = await Post.find({ category: id })
+      .populate("user")
+      .sort("-createdAt");
 
     res.json(posts);
   } catch (error) {

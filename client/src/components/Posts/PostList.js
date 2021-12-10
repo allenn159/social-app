@@ -28,12 +28,9 @@ const PostList = ({ postList }) => {
       </p>
     );
 
-  const items = [...postList];
-  items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
   return (
     <>
-      {items?.map((el) => (
+      {postList?.map((el) => (
         <Paper
           component={Link}
           to={`/posts/${el._id}`}

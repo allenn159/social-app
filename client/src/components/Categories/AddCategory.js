@@ -79,24 +79,37 @@ const AddCategory = () => {
           </div>
         </Grid>
         <Grid item xs={12}>
-          <div className={classes.categoriesCont}>
-            {categoryList?.map((el) => (
-              <Button
+          {!categoryList ? (
+            <div className={classes.categoriesCont}>
+              <p
                 style={{
-                  background: `${
-                    colors[Math.floor(Math.random() * colors.length)]
-                  }`,
+                  fontFamily: "Mukta",
+                  fontSize: "25px",
                 }}
-                variant="contained"
-                className={classes.categoriesItem}
-                key={el._id}
-                component={Link}
-                to={`/category/${el._id}`}
               >
-                {el.title}
-              </Button>
-            ))}
-          </div>
+                Loading...
+              </p>
+            </div>
+          ) : (
+            <div className={classes.categoriesCont}>
+              {categoryList?.map((el) => (
+                <Button
+                  style={{
+                    background: `${
+                      colors[Math.floor(Math.random() * colors.length)]
+                    }`,
+                  }}
+                  variant="contained"
+                  className={classes.categoriesItem}
+                  key={el._id}
+                  component={Link}
+                  to={`/category/${el._id}`}
+                >
+                  {el.title}
+                </Button>
+              ))}
+            </div>
+          )}
         </Grid>
       </Grid>
     </Container>
