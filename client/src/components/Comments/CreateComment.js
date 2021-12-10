@@ -12,10 +12,6 @@ const CreateComment = ({ postId }) => {
     description: "",
   });
 
-  useEffect(() => {
-    setComment((prev) => ({ ...prev, postId: postId }));
-  }, [postId]);
-
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(createCommentAction(comment));

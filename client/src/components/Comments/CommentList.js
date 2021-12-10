@@ -31,7 +31,7 @@ const CommentList = ({ postId }) => {
 
   return (
     <>
-      {fetchedComments?.map((el) => (
+      {fetchedComments?.docs?.map((el) => (
         <Paper className={classes.commentPaper} key={el._id}>
           <Link
             to={`/profile/${el.user._id}`}

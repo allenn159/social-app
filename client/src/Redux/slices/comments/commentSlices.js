@@ -45,16 +45,14 @@ export const fetchCommentsAction = createAsyncThunk(
     const { userAuth } = user;
 
     const config = {
-      headers: {
-        Authorization: `Bearer ${userAuth?.token}`,
-      },
+      Authorization: `Bearer ${userAuth?.token}`,
     };
 
     try {
-      const { data } = await axios.get(
-        `${baseUrl}/api/comments/${postId}`,
-        config
-      );
+      const { data } = await axios.get(`${baseUrl}/api/comments/${postId}`, {
+        params: { page: 1, limit: 5 },
+        headers: config,
+      });
       return data;
     } catch (error) {
       if (!error?.response) {

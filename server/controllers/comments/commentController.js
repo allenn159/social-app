@@ -18,6 +18,7 @@ const createCommentCtrl = expressAsyncHandler(async (req, res) => {
       description,
       user,
     });
+    console.log(comment);
     res.json(comment);
   } catch (error) {
     res.json(error);
@@ -29,11 +30,21 @@ const createCommentCtrl = expressAsyncHandler(async (req, res) => {
 //--------------------------------
 
 const fetchCommentsCtrl = expressAsyncHandler(async (req, res) => {
-  try {
-    // Find all comments and sort from newest to oldest.
-    const { id } = req?.params;
+  // try {
+  //   // Find all comments and sort from newest to oldest.
+  //   const { id } = req?.params;
+  //   const comments = await Comment.find({ post: id }).sort("-createdAt");
+  //   res.json(comments);
+  // } catch (error) {
+  //   res.json(error);
+  // }
 
-    const comments = await Comment.find({ post: id }).sort("-createdAt");
+  try {
+    const { id } = req?.params;
+    const comments = await Comment.paginate(
+      { post: id },
+      { sort: "-createdAt", page: req.query.page, limit: req.query.limit }
+    );
     res.json(comments);
   } catch (error) {
     res.json(error);
