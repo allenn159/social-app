@@ -7,7 +7,6 @@ const postSchema = new mongoose.Schema(
       required: [true, "Post title is required."],
       trim: true,
     },
-    // Created by only the admin.
     category: {
       type: String,
       required: [true, "Post category is required."],
@@ -25,6 +24,10 @@ const postSchema = new mongoose.Schema(
       default: 0,
     },
     dislikesCounter: {
+      type: Number,
+      default: 0,
+    },
+    commentsCounter: {
       type: Number,
       default: 0,
     },

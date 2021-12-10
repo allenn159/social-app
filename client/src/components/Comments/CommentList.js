@@ -13,36 +13,38 @@ import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const CommentList = ({ postId }) => {
-  const [offSet, setOffSet] = useState(0);
+  const [page, setPage] = useState(1);
   const [commentsList, setCommentsList] = useState([]);
   const user = useSelector((state) => state.users);
-  const { fetchedComments, comments, commentDeleted } = useSelector(
+  const { fetchedComments, commentCreated, commentDeleted } = useSelector(
     (state) => state?.comments
+  );
+  const commentsData = useSelector(
+    (state) => state?.comments?.fetchedComments?.docs
   );
   const { userAuth } = user;
   const isLoginUser = userAuth?._id;
   const dispatch = useDispatch();
   const classes = useStyles();
-  const commentsData = fetchedComments?.docs;
 
-  const payload = {
+  const data = {
     postId: postId,
-    offSet: offSet,
+    page: page,
   };
 
-  const handleUpdateComments = () => setOffSet((prev) => prev + 10);
-
-  useEffect(() => {
-    dispatch(fetchCommentsAction(payload));
-  }, [comments, commentDeleted]);
-
-  useEffect(() => {
-    if (commentsData) {
-      setCommentsList((prev) => [...prev, ...commentsData]);
+  const handleUpdateComments = () => {
+    if (commentsList.length >= 5) {
+      setPage((prev) => prev + 1);
     }
-    return () => {
-      setCommentsList([]);
-    };
+  };
+
+  useEffect(() => {
+    dispatch(fetchCommentsAction(data));
+  }, [page, commentDeleted, commentCreated]);
+
+  useEffect(() => {
+    if (commentCreated || commentDeleted) setCommentsList([]);
+    if (commentsData) setCommentsList((prev) => [...prev, ...commentsData]);
   }, [commentsData]);
 
   useEffect(() => {
@@ -55,6 +57,8 @@ const CommentList = ({ postId }) => {
     <InfiniteScroll
       className={classes.outerCont}
       dataLength={commentsList.length}
+      next={handleUpdateComments}
+      hasMore={true}
     >
       {commentsList.map((el) => (
         <Paper className={classes.commentPaper} key={el._id}>
