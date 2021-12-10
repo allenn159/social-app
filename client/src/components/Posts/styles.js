@@ -96,6 +96,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    width: "100%",
   },
   detailsPaper: {
     display: "flex",
@@ -169,4 +170,6 @@ export default makeStyles((theme) => ({
       width: "90%",
     },
   },
+  // Comments List Cont
+  commentsCont: { width: "100%" },
 }));

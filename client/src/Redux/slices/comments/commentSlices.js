@@ -40,7 +40,7 @@ export const createCommentAction = createAsyncThunk(
 // Fetch comments
 export const fetchCommentsAction = createAsyncThunk(
   "comment/fetch",
-  async (postId, { rejectWithValue, getState, dispatch }) => {
+  async ({ postId, offSet }, { rejectWithValue, getState, dispatch }) => {
     const user = getState()?.users;
     const { userAuth } = user;
 
@@ -50,7 +50,7 @@ export const fetchCommentsAction = createAsyncThunk(
 
     try {
       const { data } = await axios.get(`${baseUrl}/api/comments/${postId}`, {
-        params: { page: 1, limit: 5 },
+        params: { offset: offSet, limit: 10 },
         headers: config,
       });
       return data;
@@ -144,7 +144,7 @@ const commentSlices = createSlice({
     });
     builder.addCase(deleteCommentAction.fulfilled, (state, action) => {
       state.loading = false;
-      state.commentedDeleted = action?.payload;
+      state.commentDeleted = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
     });

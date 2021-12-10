@@ -18,7 +18,6 @@ const createCommentCtrl = expressAsyncHandler(async (req, res) => {
       description,
       user,
     });
-    console.log(comment);
     res.json(comment);
   } catch (error) {
     res.json(error);
@@ -43,7 +42,7 @@ const fetchCommentsCtrl = expressAsyncHandler(async (req, res) => {
     const { id } = req?.params;
     const comments = await Comment.paginate(
       { post: id },
-      { sort: "-createdAt", page: req.query.page, limit: req.query.limit }
+      { sort: "-createdAt", offset: req.query.offset, limit: req.query.limit }
     );
     res.json(comments);
   } catch (error) {

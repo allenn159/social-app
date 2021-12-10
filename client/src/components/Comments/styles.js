@@ -2,6 +2,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   // Create Comment
+  outerCont: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   paper: {
     display: "flex",
     flexDirection: "column",

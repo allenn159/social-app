@@ -135,7 +135,9 @@ const PostDetails = () => {
         </div>
       </Paper>
       <CreateComment postId={postDetails?._id} />
-      <CommentList postId={id} />
+      <div className={classes.commentsCont}>
+        <CommentList postId={id} />
+      </div>
     </div>
   );
 };
