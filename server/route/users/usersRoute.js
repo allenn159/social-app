@@ -6,7 +6,6 @@ const {
   fetchUserDetailsController,
   userProfileController,
   updateProfileController,
-  updateUserPasswordController,
   followUserController,
   unfollowUserController,
   profilePictureUploadController,
@@ -30,7 +29,7 @@ userRoutes.put(
   profilePictureResize,
   profilePictureUploadController
 );
-userRoutes.put("/password", authMiddleware, updateUserPasswordController);
+// userRoutes.put("/password", authMiddleware, updateUserPasswordController);
 // userRoutes.post(
 //   "/forget-password-token",
 //   generateForgetPasswordTokenController

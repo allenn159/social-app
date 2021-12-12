@@ -160,21 +160,21 @@ const updateProfileController = expressAsyncHandler(async (req, res) => {
 // Update user password
 //--------------------------------
 
-const updateUserPasswordController = expressAsyncHandler(async (req, res) => {
-  const { id } = req.user;
-  const { password } = req.body;
-  validateMongodbID(id);
-  // Find user by ID first.
-  const user = await User.findById(id);
+// const updateUserPasswordController = expressAsyncHandler(async (req, res) => {
+//   const { id } = req.user;
+//   const { password } = req.body;
+//   validateMongodbID(id);
+//   // Find user by ID first.
+//   const user = await User.findById(id);
 
-  if (password) {
-    user.password = password;
-    const updatedUser = await user.save();
-    res.json(updatedUser);
-  } else {
-    res.json(user);
-  }
-});
+//   if (password) {
+//     user.password = password;
+//     const updatedUser = await user.save();
+//     res.json(updatedUser);
+//   } else {
+//     res.json(user);
+//   }
+// });
 
 //--------------------------------
 // Follow user
@@ -449,7 +449,6 @@ module.exports = {
   fetchUserDetailsController,
   userProfileController,
   updateProfileController,
-  updateUserPasswordController,
   followUserController,
   unfollowUserController,
   profilePictureUploadController,

@@ -27,9 +27,6 @@ const CommentList = ({ postId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const state = useSelector((state) => state);
-  console.log(state);
-
   const data = {
     postId: postId,
     page: page,
