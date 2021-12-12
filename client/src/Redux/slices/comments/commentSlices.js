@@ -107,10 +107,10 @@ const commentSlices = createSlice({
   extraReducers: (builder) => {
     //Create comment
     builder.addCase(createCommentAction.pending, (state, action) => {
-      state.commentCreated = false;
+      state.commentCreated = true;
     });
     builder.addCase(createCommentAction.fulfilled, (state, action) => {
-      state.commentCreated = true;
+      state.commentCreated = false;
       state.comments = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
@@ -140,10 +140,10 @@ const commentSlices = createSlice({
 
     //Delete comment
     builder.addCase(deleteCommentAction.pending, (state, action) => {
-      state.commentDeleted = false;
+      state.commentDeleted = true;
     });
     builder.addCase(deleteCommentAction.fulfilled, (state, action) => {
-      state.commentDeleted = true;
+      state.commentDeleted = false;
       state.deletedComment = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;

@@ -1,5 +1,4 @@
 const Post = require("../../model/post/Post");
-const Category = require("../../model/category/Category");
 const Filter = require("bad-words");
 const fs = require("fs");
 const expressAsyncHandler = require("express-async-handler");

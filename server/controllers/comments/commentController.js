@@ -9,15 +9,17 @@ const validateMongodbID = require("../../utils/validateMongodbID");
 
 const createCommentCtrl = expressAsyncHandler(async (req, res) => {
   // Get the user from req.user
-  const user = req.user;
+  // const user = req.user;
+  const { _id } = req.user;
+
   // Get the post Id
   const { postId, description } = req.body;
 
   try {
     const comment = await Comment.create({
       post: postId,
+      user: _id,
       description,
-      user,
     });
 
     res.json(comment);
@@ -44,7 +46,12 @@ const fetchCommentsCtrl = expressAsyncHandler(async (req, res) => {
     const { id } = req?.params;
     const comments = await Comment.paginate(
       { post: id },
-      { sort: "-createdAt", page: req.query.page, limit: req.query.limit }
+      {
+        sort: "-createdAt",
+        populate: "user",
+        page: req.query.page,
+        limit: req.query.limit,
+      }
     );
     res.json(comments);
   } catch (error) {

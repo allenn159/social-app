@@ -9,7 +9,8 @@ const commentSchema = new mongoose.Schema(
       required: [true, "A post is required"],
     },
     user: {
-      type: Object,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: [true, "A user is required"],
     },
     description: {
@@ -17,7 +18,15 @@ const commentSchema = new mongoose.Schema(
       required: [true, "The comment description is required"],
     },
   },
-  { timestamps: true }
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+    timestamps: true,
+  }
 );
 
 commentSchema.plugin(mongoosePaginate);

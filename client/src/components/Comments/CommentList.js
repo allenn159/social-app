@@ -16,7 +16,7 @@ const CommentList = ({ postId }) => {
   const [page, setPage] = useState(1);
   const [commentsList, setCommentsList] = useState([]);
   const user = useSelector((state) => state.users);
-  const { fetchedComments, commentCreated, commentDeleted } = useSelector(
+  const { commentCreated, commentDeleted } = useSelector(
     (state) => state?.comments
   );
   const commentsData = useSelector(
@@ -26,6 +26,9 @@ const CommentList = ({ postId }) => {
   const isLoginUser = userAuth?._id;
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  const state = useSelector((state) => state);
+  console.log(state);
 
   const data = {
     postId: postId,
@@ -39,11 +42,11 @@ const CommentList = ({ postId }) => {
   };
 
   useEffect(() => {
+    if (commentCreated || commentDeleted) window.location.reload(false);
     dispatch(fetchCommentsAction(data));
-  }, [page, commentDeleted, commentCreated]);
+  }, [page, commentCreated, commentDeleted]);
 
   useEffect(() => {
-    if (commentCreated || commentDeleted) setCommentsList([]);
     if (commentsData) setCommentsList((prev) => [...prev, ...commentsData]);
   }, [commentsData]);
 
